@@ -1,0 +1,202 @@
+﻿<Window x:Class="CourseProj.RegisterPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CourseProj"
+        mc:Ignorable="d"
+        Title="RegisterPage"
+        Height="500"
+        Width="550"
+        
+        >
+    <Window.Background>
+        <ImageBrush ImageSource="/bg1.jpg"/>
+    </Window.Background>
+    <Grid>
+       <!--<Button
+            Click="testtt"/>-->
+        
+        <Grid HorizontalAlignment="Center" 
+                Background="#CCD1D1D1"
+              >
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition  Height="0.8*" />
+                <RowDefinition Height="0.8*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" MinWidth="150" />
+                <ColumnDefinition  Width="Auto" MinWidth="200"/>
+            </Grid.ColumnDefinitions>
+
+            <Label
+            Grid.Row="0"
+            Grid.ColumnSpan="2"
+            Content="Добро пожаловать в  окно регистрации"
+            HorizontalAlignment="Center"
+             Foreground="white"
+            FontWeight="Bold"
+            FontSize="17"
+            VerticalAlignment="Center"
+            />
+
+            <TextBox
+            x:Name="FIOinputTxt"
+            Grid.Row="1"
+            Grid.Column="1"
+            Margin="0,0,15,0" 
+            Height="20" 
+                
+                />
+
+            <TextBox
+            x:Name="EmailinputTxt"
+            Grid.Row="2"
+            Grid.Column="1"
+            Margin="0,0,15,0" 
+            Height="20"    
+                />
+
+            <TextBox
+            x:Name="MobilPhoneinputTxt"
+            Grid.Row="3"
+            Grid.Column="1"
+            Margin="0,0,15,0" 
+            Height="20"  />
+
+            <StackPanel
+            Grid.Row="4"
+            Grid.Column="1"
+            Orientation="Horizontal" 
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+                >
+                <RadioButton
+                x:Name="ManSex"
+                Content="М"
+                IsChecked="True"
+                Style="{DynamicResource RatingRadioBoxREGENTER}"
+                Width="50"    
+                    />
+                <RadioButton
+                x:Name="WomanSex"
+                Content="Ж"
+                Width="50"
+                Style="{DynamicResource RatingRadioBoxREGENTER}" />
+            </StackPanel>
+
+ 
+
+            <DatePicker
+                 x:Name="DateBirthPick"
+                Grid.Row="5"
+                Grid.Column="1"
+                Margin="0,0,9,0" 
+                Height="50" 
+                BorderBrush="{x:Null}"
+                DisplayDateStart="1950-01-01" 
+                DisplayDate="01/01/2000 13:22:30" 
+                DisplayDateEnd="2020-01-01"          
+                />
+
+            <TextBox
+            x:Name="LogininputTxt"
+            Grid.Row="6"
+            Grid.Column="1"
+            Margin="0,0,15,0" 
+            Height="20"  />
+
+            <TextBox
+            x:Name="PasswordinputTxt"
+            Grid.Row="7"
+            Grid.Column="1"
+            Margin="0,0,15,0" 
+            Height="20"  />
+           
+            <Button
+                Grid.Row="8"
+                Click="RegisterCLick"
+                Grid.ColumnSpan="2"
+                Content="Зарегестрироваться" 
+                VerticalAlignment="Center"
+                Background="#FF7CDCC4"
+                Foreground="Black"
+                Height="33"
+                Margin="50,0,50,0"
+                BorderBrush="White" 
+            />
+
+            <Button
+                Grid.Row="9"
+                Click ="OpenEnterPage"
+                Grid.ColumnSpan="2"
+                Content="Войти"  
+                VerticalAlignment="Center"
+                Background="{x:Null}"
+                Height="30"
+                Margin="100,0,100,0"
+                    BorderBrush="{x:Null}" Foreground="White" 
+            />
+
+            <Label
+            Content="ФИО :"
+            Grid.Row="1"
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Center"
+            Style="{DynamicResource SettingsLabelREGENTER}"
+            
+            />
+            <Label
+            Grid.Row="2"
+            Content="Email :"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center" 
+            Style="{DynamicResource SettingsLabelREGENTER}"
+            />
+            <Label
+            Grid.Row="3"
+            Content="Мобильный телефон :"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center" 
+            Style="{DynamicResource SettingsLabelREGENTER}"
+            />
+            <Label
+            Grid.Row="4"
+            Content="Пол :"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Style="{DynamicResource SettingsLabelREGENTER}"
+            />
+            <Label
+            Grid.Row="5"
+            Content="Дата рождения :"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center" 
+            Style="{DynamicResource SettingsLabelREGENTER}"
+            />
+            <Label
+            Grid.Row="6"
+            Content="Логин :"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Style="{DynamicResource SettingsLabelREGENTER}"
+            />
+            <Label
+            Grid.Row="7"
+            Content="Пароль :"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center" 
+            Style="{DynamicResource SettingsLabelREGENTER}"
+            />
+
+        </Grid>
+    </Grid>
+</Window>

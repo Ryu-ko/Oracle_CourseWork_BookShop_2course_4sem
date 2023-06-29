@@ -1,0 +1,163 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="ButtonStyle" TargetType="Button">
+        <Setter Property="Background" Value="#FF292929" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="BorderBrush" Value="Black" />
+        <Setter Property="BorderThickness" Value="3" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="Margin" Value="0 0 0 5" />
+        <Setter Property="Width" Value="171" />
+        <Setter Property="Height" Value="36" />
+        <Style.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True" />
+                    <Condition Property="IsPressed" Value="True" />
+
+                    <Condition Property="IsPressed" Value="True" />
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="FontWeight" Value="ExtraBold" />
+                    <Setter Property="FontSize" Value="16" />
+                    <Setter Property="BorderThickness" Value="4" />
+                    <Setter Property="Foreground" >
+                        <Setter.Value>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF0DC333"/>
+                                <GradientStop Color="#FFC3BF17" Offset="1"/>
+                                <GradientStop Color="#FF0C2BC3" Offset="0.797"/>
+                                <GradientStop Color="#FFE31717" Offset="0.429"/>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+
+            <DataTrigger Binding="{Binding ElementName=checkBoxDis, Path=IsChecked}" Value="False">
+                <Setter Property="IsEnabled" Value="False"/>
+            </DataTrigger>
+
+        </Style.Triggers>
+
+    </Style>
+
+    <Style x:Key="ButtonStyleTW" TargetType="Button">
+        <Setter Property="Background" Value="#FF292929" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="BorderBrush" Value="Black" />
+        <Setter Property="BorderThickness" Value="3" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="Margin" Value="0,0,0,2" />
+        <Setter Property="Width" Value="171" />
+        <Setter Property="Height" Value="36" />
+
+        <Style.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True" />
+                    <Condition Property="IsPressed" Value="True" />
+
+                    <Condition Property="IsPressed" Value="True" />
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="FontWeight" Value="ExtraBold" />
+                    <Setter Property="FontSize" Value="16" />
+                    <Setter Property="BorderThickness" Value="4" />
+                    <Setter Property="Foreground" >
+                        <Setter.Value>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF0DC333"/>
+                                <GradientStop Color="#FFC3BF17" Offset="1"/>
+                                <GradientStop Color="#FF0C2BC3" Offset="0.797"/>
+                                <GradientStop Color="#FFE31717" Offset="0.429"/>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+
+        </Style.Triggers>
+
+    </Style>
+
+    <Style x:Key="WinBg" TargetType="Window">
+        <Setter Property="Background" Value="#FF171717" />
+
+    </Style>
+
+    <Style x:Key="AddItm" TargetType="Button">
+        <Setter Property="Foreground" Value="White" />
+    </Style>
+
+    <Style x:Key="SottItm" TargetType="Button">
+        <Setter Property="Background" >
+            <Setter.Value>
+                <ImageBrush ImageSource="/Imgs/filterWhite.png"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style x:Key="SettingsTxtBlck" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="White" />
+    </Style>
+
+    <Style x:Key="checkBoxDisTxt" TargetType="CheckBox">
+        <Setter Property="Foreground" Value="White" />
+    </Style>
+
+    <Style x:Key="ListBoxBg" TargetType="ListBox">
+        <Setter Property="Background" Value="#FF32836F" />
+        <Setter Property="Foreground" Value="White" />
+    </Style>
+
+    <Style x:Key="SettingsLabelBlck" TargetType="Label">
+        <Setter Property="Foreground" Value="White" />
+    </Style>
+    <Style x:Key="RatingRadioBox" TargetType="RadioButton">
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+
+    <Style x:Key="SettingsLabelREGENTER" TargetType="Label">
+        <Setter Property="Foreground" Value="Black" />
+    </Style>
+    <Style x:Key="RatingRadioBoxREGENTER" TargetType="RadioButton">
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+    <!-- /////////////////////////////////////////////////////////////// -->
+
+    <ControlTemplate x:Key="ButtonTemplate" TargetType="Button">
+       <Border
+                CornerRadius="6"
+                TextBlock.Foreground="White"       
+                BorderBrush="#FF757575" 
+                BorderThickness="2"
+                Margin="0,0,0,6" 
+                Background="#FF333333" 
+                TextBlock.FontSize="14" 
+            >
+            <ContentPresenter
+                     
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    RecognizesAccessKey="True" 
+                />
+        </Border>
+    </ControlTemplate>
+
+
+
+
+
+</ResourceDictionary>

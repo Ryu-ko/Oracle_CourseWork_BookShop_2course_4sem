@@ -1,0 +1,808 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище Model" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="18.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AUTHOR">
+          <Key>
+            <PropertyRef Name="ID_AUTHOR" />
+          </Key>
+          <Property Name="ID_AUTHOR" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="FULLNAME" Type="varchar2" MaxLength="60" Nullable="false" />
+          <Property Name="BIRTHYEAR" Type="number" Precision="38" Scale="0" />
+          <Property Name="BIRTHCOUNTRY" Type="varchar2" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BOOK">
+          <Key>
+            <PropertyRef Name="ID_BOOK" />
+          </Key>
+          <Property Name="ID_BOOK" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="BOOK_NAME" Type="varchar2" MaxLength="200" Nullable="false" />
+          <Property Name="PAGE_NUMBER" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="ISBN" Type="varchar2" MaxLength="20" Nullable="false" />
+          <Property Name="BOOKBINDINGTYPE" Type="varchar2" MaxLength="40" Nullable="false" />
+          <Property Name="YEAR_OF_PUBLICATION" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="BOOK_ID_PUBLISHINGHOUSE" Type="number" Precision="38" Scale="0" />
+          <Property Name="BOOK_LANGUAGE" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="BOOK_DESCRIPTION" Type="varchar2" MaxLength="3000" Nullable="false" />
+          <Property Name="BOOK_IMAGESOURCE" Type="varchar2" MaxLength="40" Nullable="false" />
+          <Property Name="NUMBERSOFBOOKS" Type="number" Precision="38" Scale="0" />
+          <Property Name="BOOK_PRISE" Type="number" Precision="5" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GENRE">
+          <Key>
+            <PropertyRef Name="GENRECODE" />
+          </Key>
+          <Property Name="GENRECODE" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="NAMEGENRE" Type="varchar2" MaxLength="60" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ORDERINF">
+          <Key>
+            <PropertyRef Name="ID_ORDER" />
+          </Key>
+          <Property Name="ID_ORDER" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="ID_USER" Type="number" Precision="38" Scale="0" />
+          <Property Name="ORDER_DATE" Type="date" Nullable="false" />
+          <Property Name="DELIVERY_TIME" Type="date" Nullable="false" />
+          <Property Name="AMOUNT" Type="number" Precision="4" Scale="2" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "ADMINCORE.ORDERS" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="ORDERS">
+          <Key>
+            <PropertyRef Name="NUMBERORDEREDBOOKS" />
+          </Key>
+          <Property Name="ID_ORDERS" Type="number" Precision="38" Scale="0" />
+          <Property Name="ID_BOOK" Type="number" Precision="38" Scale="0" />
+          <Property Name="NUMBERORDEREDBOOKS" Type="number" Precision="38" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PUBLISHERHOUSE">
+          <Key>
+            <PropertyRef Name="ID_PUBLISHINGHOUSE" />
+          </Key>
+          <Property Name="ID_PUBLISHINGHOUSE" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="PUBLISHINGHOUSE_NAME" Type="varchar2" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="USERACCOUNT">
+          <Key>
+            <PropertyRef Name="ID_ACCOUNT" />
+          </Key>
+          <Property Name="ID_ACCOUNT" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="ID_USERAC" Type="number" Precision="38" Scale="0" />
+          <Property Name="LOGIN" Type="varchar2" MaxLength="40" />
+          <Property Name="PASSWORD" Type="varchar2" MaxLength="40" />
+        </EntityType>
+        <EntityType Name="USERINF">
+          <Key>
+            <PropertyRef Name="ID_USER" />
+          </Key>
+          <Property Name="ID_USER" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="USER_NAME" Type="varchar2" MaxLength="100" Nullable="false" />
+          <Property Name="USER_EMAIL" Type="varchar2" MaxLength="40" Nullable="false" />
+          <Property Name="USER_NUMER" Type="varchar2" MaxLength="10" Nullable="false" />
+          <Property Name="USER_SEX" Type="varchar2" MaxLength="2" Nullable="false" />
+          <Property Name="USER_BIRTHYEAR" Type="date" Nullable="false" />
+        </EntityType>
+        <Association Name="SYS_C008967">
+          <End Role="USERINF" Type="Self.USERINF" Multiplicity="0..1" />
+          <End Role="ORDERINF" Type="Self.ORDERINF" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERINF">
+              <PropertyRef Name="ID_USER" />
+            </Principal>
+            <Dependent Role="ORDERINF">
+              <PropertyRef Name="ID_USER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C008978">
+          <End Role="PUBLISHERHOUSE" Type="Self.PUBLISHERHOUSE" Multiplicity="0..1" />
+          <End Role="BOOK" Type="Self.BOOK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PUBLISHERHOUSE">
+              <PropertyRef Name="ID_PUBLISHINGHOUSE" />
+            </Principal>
+            <Dependent Role="BOOK">
+              <PropertyRef Name="BOOK_ID_PUBLISHINGHOUSE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C009023">
+          <End Role="ORDERINF" Type="Self.ORDERINF" Multiplicity="0..1" />
+          <End Role="ORDERS" Type="Self.ORDERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ORDERINF">
+              <PropertyRef Name="ID_ORDER" />
+            </Principal>
+            <Dependent Role="ORDERS">
+              <PropertyRef Name="ID_ORDERS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C009024">
+          <End Role="BOOK" Type="Self.BOOK" Multiplicity="0..1" />
+          <End Role="ORDERS" Type="Self.ORDERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BOOK">
+              <PropertyRef Name="ID_BOOK" />
+            </Principal>
+            <Dependent Role="ORDERS">
+              <PropertyRef Name="ID_BOOK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C009076">
+          <End Role="USERINF" Type="Self.USERINF" Multiplicity="0..1" />
+          <End Role="USERACCOUNT" Type="Self.USERACCOUNT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERINF">
+              <PropertyRef Name="ID_USER" />
+            </Principal>
+            <Dependent Role="USERACCOUNT">
+              <PropertyRef Name="ID_USERAC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="ADD_AUTHORS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMINCORE">
+          <Parameter Name="PRC_AUTHOR" Type="varchar2" Mode="In" />
+          <Parameter Name="PRC_FULLNAME" Type="varchar2" Mode="In" />
+          <Parameter Name="PRC_BIRTHYEAR" Type="number" Mode="In" />
+          <Parameter Name="PRC_BIRTHCOUNTRY" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="ADD_GENRES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMINCORE">
+          <Parameter Name="PRC_GENRES" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="ADD_NEW_BOOK" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMINCORE">
+          <Parameter Name="ADDBOOKNAME" Type="varchar2" Mode="In" />
+          <Parameter Name="ADDBOOKPAGES" Type="number" Mode="In" />
+          <Parameter Name="ADDBOOKISBN" Type="varchar2" Mode="In" />
+          <Parameter Name="ADDBOOKBINDING" Type="varchar2" Mode="In" />
+          <Parameter Name="ADDBOOKYEARPUBLIC" Type="number" Mode="In" />
+          <Parameter Name="ADDBOOKIDPUBLISHHOUS" Type="number" Mode="In" />
+          <Parameter Name="ADDBOOKLANGUAGE" Type="varchar2" Mode="In" />
+          <Parameter Name="ADDBOOKDESCRIPT" Type="varchar2" Mode="In" />
+          <Parameter Name="ADDBOOKIMAGESOURSCE" Type="varchar2" Mode="In" />
+          <Parameter Name="ADDBOOKNUMBERSOFBOOKS" Type="number" Mode="In" />
+          <Parameter Name="ADDBOOKPRICE" Type="number" Mode="In" />
+        </Function>
+        <Function Name="ADDNEWBOOK" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMINCORE">
+          <Parameter Name="ADDBOOKNAME" Type="varchar2" Mode="In" />
+          <Parameter Name="ADDBOOKPAGES" Type="number" Mode="In" />
+          <Parameter Name="ADDBOOKISBN" Type="varchar2" Mode="In" />
+          <Parameter Name="ADDBOOKBINDING" Type="varchar2" Mode="In" />
+          <Parameter Name="ADDBOOKYEARPUBLIC" Type="number" Mode="In" />
+          <Parameter Name="ADDBOOKIDPUBLISHHOUS" Type="number" Mode="In" />
+          <Parameter Name="ADDBOOKLANGUAGE" Type="varchar2" Mode="In" />
+          <Parameter Name="ADDBOOKDESCRIPT" Type="varchar2" Mode="In" />
+          <Parameter Name="ADDBOOKIMAGESOURSCE" Type="varchar2" Mode="In" />
+          <Parameter Name="ADDBOOKNUMBERSOFBOOKS" Type="number" Mode="In" />
+          <Parameter Name="ADDBOOKPRICE" Type="number" Mode="In" />
+        </Function>
+        <Function Name="BOOKALLINF" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMINCORE" />
+        <Function Name="BOOKINF" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMINCORE" />
+        <Function Name="BOOKINFAVAILABILITY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMINCORE" />
+        <Function Name="BOOKINF_NON_AVAILABILITY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMINCORE" />
+        <Function Name="CHECKBOOKAVAILABILITYCURS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMINCORE">
+          <Parameter Name="BOOKNAME" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="ENTERUSER" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMINCORE">
+          <Parameter Name="ENTEREDLOGIN" Type="varchar2" Mode="In" />
+          <Parameter Name="ENTEREDPASSWORD" Type="varchar2" Mode="In" />
+          <Parameter Name="ENTERENDFIO" Type="varchar2" Mode="In" />
+          <Parameter Name="ENTEREDEMAIL" Type="varchar2" Mode="In" />
+          <Parameter Name="ENTEREDNUMBER" Type="varchar2" Mode="In" />
+          <Parameter Name="ENTEREDSEX" Type="varchar2" Mode="In" />
+          <Parameter Name="ENTEREDBIRTHDAY" Type="date" Mode="In" />
+        </Function>
+        <Function Name="EXPORT_AUTHORS_TO_XML" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMINCORE" />
+        <Function Name="FIND_BOOKS_BY_TITLE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMINCORE">
+          <Parameter Name="TITLE" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="GETALLGENRESINF" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMINCORE">
+          <Parameter Name="FUNC_BOOK_ID" Type="number" Mode="In" />
+        </Function>
+        <Function Name="GET_BOOK_BYAUTHOR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMINCORE">
+          <Parameter Name="P_AUTHORNAME" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="GET_BOOK_BYGENRE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMINCORE">
+          <Parameter Name="P_NAMEGENREE" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="GET_BOOK_BYLANGUAGE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMINCORE">
+          <Parameter Name="P_LANGUAGE" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="GETORDERSINF" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMINCORE" />
+        <Function Name="GETPUBLISHERINF" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMINCORE">
+          <Parameter Name="FUNC_BOOK_ID" Type="number" Mode="In" />
+        </Function>
+        <Function Name="GETUSERSINF" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMINCORE" />
+        <Function Name="IMPORT_AUTHORS_FROM_XML" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMINCORE" />
+        <Function Name="INSERTHUGEDATA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMINCORE">
+          <Parameter Name="I" Type="number" Mode="In" />
+          <Parameter Name="TEXT" Type="nvarchar2" Mode="In" />
+        </Function>
+        <Function Name="INSERTORDERINF" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMINCORE">
+          <Parameter Name="P_ID_ORDER" Type="number" Mode="In" />
+          <Parameter Name="P_ID_USER" Type="number" Mode="In" />
+          <Parameter Name="P_ORDER_DATE" Type="date" Mode="In" />
+          <Parameter Name="P_DELIVERY_TIME" Type="date" Mode="In" />
+          <Parameter Name="P_ID_ORDERS" Type="number" Mode="In" />
+          <Parameter Name="P_ID_BOOK" Type="number" Mode="In" />
+          <Parameter Name="P_NUMBERORDEREDBOOKS" Type="number" Mode="In" />
+        </Function>
+        <Function Name="SEARCH_BOOKS_BYPAGERANGE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMINCORE">
+          <Parameter Name="PRC_MIN_PAGES" Type="number" Mode="In" />
+          <Parameter Name="PRC_MAX_PAGES" Type="number" Mode="In" />
+        </Function>
+        <Function Name="SEARCH_BOOKS_BYYEAR_OF_PUBLICATION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMINCORE">
+          <Parameter Name="PRC_MIN_YEAR" Type="number" Mode="In" />
+          <Parameter Name="PRC_MAX_YEAR" Type="number" Mode="In" />
+        </Function>
+        <Function Name="SEARCH_BOOKS_BYYEARRANGE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMINCORE">
+          <Parameter Name="PRC_MIN_YEAR" Type="number" Mode="In" />
+          <Parameter Name="PRC_MAX_YEAR" Type="number" Mode="In" />
+        </Function>
+        <Function Name="TESTENTER" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMINCORE">
+          <Parameter Name="ENTEREDLOGINN" Type="varchar2" Mode="In" />
+          <Parameter Name="ENTEREDPASSWORDD" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="UPDATE_AUTHORS2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMINCORE">
+          <Parameter Name="PRC_AUTHOR" Type="varchar2" Mode="In" />
+          <Parameter Name="PRC_FULLNAME" Type="varchar2" Mode="In" />
+          <Parameter Name="PRC_BIRTHYEAR" Type="number" Mode="In" />
+          <Parameter Name="PRC_BIRTHCOUNTRY" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="UPDATE_BOOKINF" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMINCORE">
+          <Parameter Name="PROC_BOOK_ID" Type="number" Mode="In" />
+          <Parameter Name="UPDATEBOOKNAME" Type="varchar2" Mode="In" />
+          <Parameter Name="UPDATEBOOKPAGES" Type="number" Mode="In" />
+          <Parameter Name="UPDATEBOOKISBN" Type="varchar2" Mode="In" />
+          <Parameter Name="UPDATEBOOKBINDING" Type="varchar2" Mode="In" />
+          <Parameter Name="UPDATEBOOKYEARPUBLIC" Type="number" Mode="In" />
+          <Parameter Name="UPDATEBOOKIDPUBLISHHOUS" Type="number" Mode="In" />
+          <Parameter Name="UPDATEBOOKLANGUAGE" Type="varchar2" Mode="In" />
+          <Parameter Name="UPDATEBOOKDESCRIPT" Type="varchar2" Mode="In" />
+          <Parameter Name="UPDATEBOOKIMAGESOURSCE" Type="varchar2" Mode="In" />
+          <Parameter Name="UPDATEBOOKNUMBERSOFBOOKS" Type="number" Mode="In" />
+          <Parameter Name="UPDATEBOOKPRICE" Type="number" Mode="In" />
+        </Function>
+        <EntityContainer Name="Хранилище ModelContainer">
+          <EntitySet Name="AUTHOR" EntityType="Self.AUTHOR" Schema="ADMINCORE" store:Type="Tables" />
+          <EntitySet Name="BOOK" EntityType="Self.BOOK" Schema="ADMINCORE" store:Type="Tables" />
+          <EntitySet Name="GENRE" EntityType="Self.GENRE" Schema="ADMINCORE" store:Type="Tables" />
+          <EntitySet Name="ORDERINF" EntityType="Self.ORDERINF" Schema="ADMINCORE" store:Type="Tables" />
+          <EntitySet Name="PUBLISHERHOUSE" EntityType="Self.PUBLISHERHOUSE" Schema="ADMINCORE" store:Type="Tables" />
+          <EntitySet Name="USERACCOUNT" EntityType="Self.USERACCOUNT" Schema="ADMINCORE" store:Type="Tables" />
+          <EntitySet Name="USERINF" EntityType="Self.USERINF" Schema="ADMINCORE" store:Type="Tables" />
+          <EntitySet Name="ORDERS" EntityType="Self.ORDERS" store:Type="Tables" store:Schema="ADMINCORE">
+            <DefiningQuery>SELECT 
+"ORDERS"."ID_ORDERS" AS "ID_ORDERS", 
+"ORDERS"."ID_BOOK" AS "ID_BOOK", 
+"ORDERS"."NUMBERORDEREDBOOKS" AS "NUMBERORDEREDBOOKS"
+FROM "ADMINCORE"."ORDERS" "ORDERS"</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="SYS_C008967" Association="Self.SYS_C008967">
+            <End Role="USERINF" EntitySet="USERINF" />
+            <End Role="ORDERINF" EntitySet="ORDERINF" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C008978" Association="Self.SYS_C008978">
+            <End Role="PUBLISHERHOUSE" EntitySet="PUBLISHERHOUSE" />
+            <End Role="BOOK" EntitySet="BOOK" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C009023" Association="Self.SYS_C009023">
+            <End Role="ORDERINF" EntitySet="ORDERINF" />
+            <End Role="ORDERS" EntitySet="ORDERS" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C009024" Association="Self.SYS_C009024">
+            <End Role="BOOK" EntitySet="BOOK" />
+            <End Role="ORDERS" EntitySet="ORDERS" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C009076" Association="Self.SYS_C009076">
+            <End Role="USERINF" EntitySet="USERINF" />
+            <End Role="USERACCOUNT" EntitySet="USERACCOUNT" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AUTHOR">
+          <Key>
+            <PropertyRef Name="ID_AUTHOR" />
+          </Key>
+          <Property Name="ID_AUTHOR" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="FULLNAME" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BIRTHYEAR" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="BIRTHCOUNTRY" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BOOK">
+          <Key>
+            <PropertyRef Name="ID_BOOK" />
+          </Key>
+          <Property Name="ID_BOOK" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="BOOK_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PAGE_NUMBER" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="ISBN" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BOOKBINDINGTYPE" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="YEAR_OF_PUBLICATION" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="BOOK_ID_PUBLISHINGHOUSE" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="BOOK_LANGUAGE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BOOK_DESCRIPTION" Type="String" MaxLength="3000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BOOK_IMAGESOURCE" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NUMBERSOFBOOKS" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="BOOK_PRISE" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+          <NavigationProperty Name="PUBLISHERHOUSE" Relationship="Self.SYS_C008978" FromRole="BOOK" ToRole="PUBLISHERHOUSE" />
+          <NavigationProperty Name="ORDERS" Relationship="Self.SYS_C009024" FromRole="BOOK" ToRole="ORDERS" />
+        </EntityType>
+        <EntityType Name="GENRE">
+          <Key>
+            <PropertyRef Name="GENRECODE" />
+          </Key>
+          <Property Name="GENRECODE" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="NAMEGENRE" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ORDERINF">
+          <Key>
+            <PropertyRef Name="ID_ORDER" />
+          </Key>
+          <Property Name="ID_ORDER" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="ID_USER" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="ORDER_DATE" Type="DateTime" Nullable="false" />
+          <Property Name="DELIVERY_TIME" Type="DateTime" Nullable="false" />
+          <Property Name="AMOUNT" Type="Decimal" Precision="4" Scale="2" Nullable="false" />
+          <NavigationProperty Name="USERINF" Relationship="Self.SYS_C008967" FromRole="ORDERINF" ToRole="USERINF" />
+          <NavigationProperty Name="ORDERS" Relationship="Self.SYS_C009023" FromRole="ORDERINF" ToRole="ORDERS" />
+        </EntityType>
+        <EntityType Name="PUBLISHERHOUSE">
+          <Key>
+            <PropertyRef Name="ID_PUBLISHINGHOUSE" />
+          </Key>
+          <Property Name="ID_PUBLISHINGHOUSE" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="PUBLISHINGHOUSE_NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="BOOK" Relationship="Self.SYS_C008978" FromRole="PUBLISHERHOUSE" ToRole="BOOK" />
+        </EntityType>
+        <EntityType Name="USERACCOUNT">
+          <Key>
+            <PropertyRef Name="ID_ACCOUNT" />
+          </Key>
+          <Property Name="ID_ACCOUNT" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="ID_USERAC" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="LOGIN" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="PASSWORD" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="USERINF" Relationship="Self.SYS_C009076" FromRole="USERACCOUNT" ToRole="USERINF" />
+        </EntityType>
+        <EntityType Name="USERINF">
+          <Key>
+            <PropertyRef Name="ID_USER" />
+          </Key>
+          <Property Name="ID_USER" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="USER_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="USER_EMAIL" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="USER_NUMER" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="USER_SEX" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="USER_BIRTHYEAR" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="ORDERINF" Relationship="Self.SYS_C008967" FromRole="USERINF" ToRole="ORDERINF" />
+          <NavigationProperty Name="USERACCOUNT" Relationship="Self.SYS_C009076" FromRole="USERINF" ToRole="USERACCOUNT" />
+        </EntityType>
+        <EntityType Name="ORDERS">
+          <Key>
+            <PropertyRef Name="NUMBERORDEREDBOOKS" />
+          </Key>
+          <Property Name="ID_ORDERS" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="ID_BOOK" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="NUMBERORDEREDBOOKS" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+          <NavigationProperty Name="BOOK" Relationship="Self.SYS_C009024" FromRole="ORDERS" ToRole="BOOK" />
+          <NavigationProperty Name="ORDERINF" Relationship="Self.SYS_C009023" FromRole="ORDERS" ToRole="ORDERINF" />
+        </EntityType>
+        <Association Name="SYS_C008978">
+          <End Role="PUBLISHERHOUSE" Type="Self.PUBLISHERHOUSE" Multiplicity="0..1" />
+          <End Role="BOOK" Type="Self.BOOK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PUBLISHERHOUSE">
+              <PropertyRef Name="ID_PUBLISHINGHOUSE" />
+            </Principal>
+            <Dependent Role="BOOK">
+              <PropertyRef Name="BOOK_ID_PUBLISHINGHOUSE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C009024">
+          <End Role="BOOK" Type="Self.BOOK" Multiplicity="0..1" />
+          <End Role="ORDERS" Type="Self.ORDERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BOOK">
+              <PropertyRef Name="ID_BOOK" />
+            </Principal>
+            <Dependent Role="ORDERS">
+              <PropertyRef Name="ID_BOOK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C008967">
+          <End Role="USERINF" Type="Self.USERINF" Multiplicity="0..1" />
+          <End Role="ORDERINF" Type="Self.ORDERINF" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERINF">
+              <PropertyRef Name="ID_USER" />
+            </Principal>
+            <Dependent Role="ORDERINF">
+              <PropertyRef Name="ID_USER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C009023">
+          <End Role="ORDERINF" Type="Self.ORDERINF" Multiplicity="0..1" />
+          <End Role="ORDERS" Type="Self.ORDERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ORDERINF">
+              <PropertyRef Name="ID_ORDER" />
+            </Principal>
+            <Dependent Role="ORDERS">
+              <PropertyRef Name="ID_ORDERS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C009076">
+          <End Role="USERINF" Type="Self.USERINF" Multiplicity="0..1" />
+          <End Role="USERACCOUNT" Type="Self.USERACCOUNT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERINF">
+              <PropertyRef Name="ID_USER" />
+            </Principal>
+            <Dependent Role="USERACCOUNT">
+              <PropertyRef Name="ID_USERAC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AUTHOR" EntityType="Self.AUTHOR" />
+          <EntitySet Name="BOOK" EntityType="Self.BOOK" />
+          <EntitySet Name="GENRE" EntityType="Self.GENRE" />
+          <EntitySet Name="ORDERINF" EntityType="Self.ORDERINF" />
+          <EntitySet Name="PUBLISHERHOUSE" EntityType="Self.PUBLISHERHOUSE" />
+          <EntitySet Name="USERACCOUNT" EntityType="Self.USERACCOUNT" />
+          <EntitySet Name="USERINF" EntityType="Self.USERINF" />
+          <EntitySet Name="ORDERS" EntityType="Self.ORDERS" />
+          <AssociationSet Name="SYS_C008978" Association="Self.SYS_C008978">
+            <End Role="PUBLISHERHOUSE" EntitySet="PUBLISHERHOUSE" />
+            <End Role="BOOK" EntitySet="BOOK" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C009024" Association="Self.SYS_C009024">
+            <End Role="BOOK" EntitySet="BOOK" />
+            <End Role="ORDERS" EntitySet="ORDERS" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C008967" Association="Self.SYS_C008967">
+            <End Role="USERINF" EntitySet="USERINF" />
+            <End Role="ORDERINF" EntitySet="ORDERINF" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C009023" Association="Self.SYS_C009023">
+            <End Role="ORDERINF" EntitySet="ORDERINF" />
+            <End Role="ORDERS" EntitySet="ORDERS" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C009076" Association="Self.SYS_C009076">
+            <End Role="USERINF" EntitySet="USERINF" />
+            <End Role="USERACCOUNT" EntitySet="USERACCOUNT" />
+          </AssociationSet>
+          <FunctionImport Name="ADD_AUTHORS">
+            <Parameter Name="PRC_AUTHOR" Mode="In" Type="String" />
+            <Parameter Name="PRC_FULLNAME" Mode="In" Type="String" />
+            <Parameter Name="PRC_BIRTHYEAR" Mode="In" Type="Decimal" />
+            <Parameter Name="PRC_BIRTHCOUNTRY" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ADD_GENRES">
+            <Parameter Name="PRC_GENRES" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ADD_NEW_BOOK">
+            <Parameter Name="ADDBOOKNAME" Mode="In" Type="String" />
+            <Parameter Name="ADDBOOKPAGES" Mode="In" Type="Decimal" />
+            <Parameter Name="ADDBOOKISBN" Mode="In" Type="String" />
+            <Parameter Name="ADDBOOKBINDING" Mode="In" Type="String" />
+            <Parameter Name="ADDBOOKYEARPUBLIC" Mode="In" Type="Decimal" />
+            <Parameter Name="ADDBOOKIDPUBLISHHOUS" Mode="In" Type="Decimal" />
+            <Parameter Name="ADDBOOKLANGUAGE" Mode="In" Type="String" />
+            <Parameter Name="ADDBOOKDESCRIPT" Mode="In" Type="String" />
+            <Parameter Name="ADDBOOKIMAGESOURSCE" Mode="In" Type="String" />
+            <Parameter Name="ADDBOOKNUMBERSOFBOOKS" Mode="In" Type="Decimal" />
+            <Parameter Name="ADDBOOKPRICE" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="ADDNEWBOOK">
+            <Parameter Name="ADDBOOKNAME" Mode="In" Type="String" />
+            <Parameter Name="ADDBOOKPAGES" Mode="In" Type="Decimal" />
+            <Parameter Name="ADDBOOKISBN" Mode="In" Type="String" />
+            <Parameter Name="ADDBOOKBINDING" Mode="In" Type="String" />
+            <Parameter Name="ADDBOOKYEARPUBLIC" Mode="In" Type="Decimal" />
+            <Parameter Name="ADDBOOKIDPUBLISHHOUS" Mode="In" Type="Decimal" />
+            <Parameter Name="ADDBOOKLANGUAGE" Mode="In" Type="String" />
+            <Parameter Name="ADDBOOKDESCRIPT" Mode="In" Type="String" />
+            <Parameter Name="ADDBOOKIMAGESOURSCE" Mode="In" Type="String" />
+            <Parameter Name="ADDBOOKNUMBERSOFBOOKS" Mode="In" Type="Decimal" />
+            <Parameter Name="ADDBOOKPRICE" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="BOOKALLINF" />
+          <FunctionImport Name="BOOKINF" ReturnType="Collection(Model.BOOKINF_Result)" />
+          <FunctionImport Name="BOOKINFAVAILABILITY" />
+          <FunctionImport Name="BOOKINF_NON_AVAILABILITY" />
+          <FunctionImport Name="CHECKBOOKAVAILABILITYCURS">
+            <Parameter Name="BOOKNAME" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ENTERUSER">
+            <Parameter Name="ENTEREDLOGIN" Mode="In" Type="String" />
+            <Parameter Name="ENTEREDPASSWORD" Mode="In" Type="String" />
+            <Parameter Name="ENTERENDFIO" Mode="In" Type="String" />
+            <Parameter Name="ENTEREDEMAIL" Mode="In" Type="String" />
+            <Parameter Name="ENTEREDNUMBER" Mode="In" Type="String" />
+            <Parameter Name="ENTEREDSEX" Mode="In" Type="String" />
+            <Parameter Name="ENTEREDBIRTHDAY" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="EXPORT_AUTHORS_TO_XML" />
+          <FunctionImport Name="FIND_BOOKS_BY_TITLE">
+            <Parameter Name="TITLE" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GETALLGENRESINF">
+            <Parameter Name="FUNC_BOOK_ID" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="GET_BOOK_BYAUTHOR">
+            <Parameter Name="P_AUTHORNAME" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GET_BOOK_BYGENRE">
+            <Parameter Name="P_NAMEGENREE" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GET_BOOK_BYLANGUAGE">
+            <Parameter Name="P_LANGUAGE" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GETORDERSINF" />
+          <FunctionImport Name="GETPUBLISHERINF">
+            <Parameter Name="FUNC_BOOK_ID" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="GETUSERSINF" ReturnType="Collection(Model.GETUSERSINF_Result)" />
+          <FunctionImport Name="IMPORT_AUTHORS_FROM_XML" />
+          <FunctionImport Name="INSERTHUGEDATA">
+            <Parameter Name="I" Mode="In" Type="Decimal" />
+            <Parameter Name="TEXT" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="INSERTORDERINF">
+            <Parameter Name="P_ID_ORDER" Mode="In" Type="Decimal" />
+            <Parameter Name="P_ID_USER" Mode="In" Type="Decimal" />
+            <Parameter Name="P_ORDER_DATE" Mode="In" Type="DateTime" />
+            <Parameter Name="P_DELIVERY_TIME" Mode="In" Type="DateTime" />
+            <Parameter Name="P_ID_ORDERS" Mode="In" Type="Decimal" />
+            <Parameter Name="P_ID_BOOK" Mode="In" Type="Decimal" />
+            <Parameter Name="P_NUMBERORDEREDBOOKS" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="SEARCH_BOOKS_BYPAGERANGE">
+            <Parameter Name="PRC_MIN_PAGES" Mode="In" Type="Decimal" />
+            <Parameter Name="PRC_MAX_PAGES" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="SEARCH_BOOKS_BYYEAR_OF_PUBLICATION">
+            <Parameter Name="PRC_MIN_YEAR" Mode="In" Type="Decimal" />
+            <Parameter Name="PRC_MAX_YEAR" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="SEARCH_BOOKS_BYYEARRANGE">
+            <Parameter Name="PRC_MIN_YEAR" Mode="In" Type="Decimal" />
+            <Parameter Name="PRC_MAX_YEAR" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="TESTENTER">
+            <Parameter Name="ENTEREDLOGINN" Mode="In" Type="String" />
+            <Parameter Name="ENTEREDPASSWORDD" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UPDATE_AUTHORS2">
+            <Parameter Name="PRC_AUTHOR" Mode="In" Type="String" />
+            <Parameter Name="PRC_FULLNAME" Mode="In" Type="String" />
+            <Parameter Name="PRC_BIRTHYEAR" Mode="In" Type="Decimal" />
+            <Parameter Name="PRC_BIRTHCOUNTRY" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UPDATE_BOOKINF">
+            <Parameter Name="PROC_BOOK_ID" Mode="In" Type="Decimal" />
+            <Parameter Name="UPDATEBOOKNAME" Mode="In" Type="String" />
+            <Parameter Name="UPDATEBOOKPAGES" Mode="In" Type="Decimal" />
+            <Parameter Name="UPDATEBOOKISBN" Mode="In" Type="String" />
+            <Parameter Name="UPDATEBOOKBINDING" Mode="In" Type="String" />
+            <Parameter Name="UPDATEBOOKYEARPUBLIC" Mode="In" Type="Decimal" />
+            <Parameter Name="UPDATEBOOKIDPUBLISHHOUS" Mode="In" Type="Decimal" />
+            <Parameter Name="UPDATEBOOKLANGUAGE" Mode="In" Type="String" />
+            <Parameter Name="UPDATEBOOKDESCRIPT" Mode="In" Type="String" />
+            <Parameter Name="UPDATEBOOKIMAGESOURSCE" Mode="In" Type="String" />
+            <Parameter Name="UPDATEBOOKNUMBERSOFBOOKS" Mode="In" Type="Decimal" />
+            <Parameter Name="UPDATEBOOKPRICE" Mode="In" Type="Decimal" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="BOOKINF_Result">
+          <Property Type="Decimal" Name="ID_BOOK" Nullable="false" />
+          <Property Type="String" Name="BOOK_NAME" Nullable="false" />
+          <Property Type="Decimal" Name="PAGE_NUMBER" Nullable="false" />
+          <Property Type="String" Name="ISBN" Nullable="false" />
+          <Property Type="String" Name="BOOKBINDINGTYPE" Nullable="false" />
+          <Property Type="Decimal" Name="YEAR_OF_PUBLICATION" Nullable="false" />
+          <Property Type="String" Name="BOOK_LANGUAGE" Nullable="false" />
+          <Property Type="String" Name="BOOK_IMAGESOURCE" Nullable="false" />
+          <Property Type="Decimal" Name="NUMBERSOFBOOKS" Nullable="true" />
+          <Property Type="Decimal" Name="BOOK_PRISE" Nullable="false" />
+          <Property Type="String" Name="BOOK_DESCRIPTION" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GETUSERSINF_Result">
+          <Property Type="Decimal" Name="ID_ACCOUNT" Nullable="false" />
+          <Property Type="Decimal" Name="ID_USERAC" Nullable="true" />
+          <Property Type="String" Name="LOGIN" Nullable="true" />
+          <Property Type="String" Name="PASSWORD" Nullable="true" />
+          <Property Type="String" Name="USER_NAME" Nullable="false" />
+          <Property Type="String" Name="USER_EMAIL" Nullable="false" />
+          <Property Type="String" Name="USER_NUMER" Nullable="false" />
+          <Property Type="String" Name="USER_SEX" Nullable="false" />
+          <Property Type="DateTime" Name="USER_BIRTHYEAR" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ModelContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="AUTHOR">
+            <EntityTypeMapping TypeName="Model.AUTHOR">
+              <MappingFragment StoreEntitySet="AUTHOR">
+                <ScalarProperty Name="ID_AUTHOR" ColumnName="ID_AUTHOR" />
+                <ScalarProperty Name="FULLNAME" ColumnName="FULLNAME" />
+                <ScalarProperty Name="BIRTHYEAR" ColumnName="BIRTHYEAR" />
+                <ScalarProperty Name="BIRTHCOUNTRY" ColumnName="BIRTHCOUNTRY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BOOK">
+            <EntityTypeMapping TypeName="Model.BOOK">
+              <MappingFragment StoreEntitySet="BOOK">
+                <ScalarProperty Name="ID_BOOK" ColumnName="ID_BOOK" />
+                <ScalarProperty Name="BOOK_NAME" ColumnName="BOOK_NAME" />
+                <ScalarProperty Name="PAGE_NUMBER" ColumnName="PAGE_NUMBER" />
+                <ScalarProperty Name="ISBN" ColumnName="ISBN" />
+                <ScalarProperty Name="BOOKBINDINGTYPE" ColumnName="BOOKBINDINGTYPE" />
+                <ScalarProperty Name="YEAR_OF_PUBLICATION" ColumnName="YEAR_OF_PUBLICATION" />
+                <ScalarProperty Name="BOOK_ID_PUBLISHINGHOUSE" ColumnName="BOOK_ID_PUBLISHINGHOUSE" />
+                <ScalarProperty Name="BOOK_LANGUAGE" ColumnName="BOOK_LANGUAGE" />
+                <ScalarProperty Name="BOOK_DESCRIPTION" ColumnName="BOOK_DESCRIPTION" />
+                <ScalarProperty Name="BOOK_IMAGESOURCE" ColumnName="BOOK_IMAGESOURCE" />
+                <ScalarProperty Name="NUMBERSOFBOOKS" ColumnName="NUMBERSOFBOOKS" />
+                <ScalarProperty Name="BOOK_PRISE" ColumnName="BOOK_PRISE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GENRE">
+            <EntityTypeMapping TypeName="Model.GENRE">
+              <MappingFragment StoreEntitySet="GENRE">
+                <ScalarProperty Name="GENRECODE" ColumnName="GENRECODE" />
+                <ScalarProperty Name="NAMEGENRE" ColumnName="NAMEGENRE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ORDERINF">
+            <EntityTypeMapping TypeName="Model.ORDERINF">
+              <MappingFragment StoreEntitySet="ORDERINF">
+                <ScalarProperty Name="ID_ORDER" ColumnName="ID_ORDER" />
+                <ScalarProperty Name="ID_USER" ColumnName="ID_USER" />
+                <ScalarProperty Name="ORDER_DATE" ColumnName="ORDER_DATE" />
+                <ScalarProperty Name="DELIVERY_TIME" ColumnName="DELIVERY_TIME" />
+                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PUBLISHERHOUSE">
+            <EntityTypeMapping TypeName="Model.PUBLISHERHOUSE">
+              <MappingFragment StoreEntitySet="PUBLISHERHOUSE">
+                <ScalarProperty Name="ID_PUBLISHINGHOUSE" ColumnName="ID_PUBLISHINGHOUSE" />
+                <ScalarProperty Name="PUBLISHINGHOUSE_NAME" ColumnName="PUBLISHINGHOUSE_NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USERACCOUNT">
+            <EntityTypeMapping TypeName="Model.USERACCOUNT">
+              <MappingFragment StoreEntitySet="USERACCOUNT">
+                <ScalarProperty Name="ID_ACCOUNT" ColumnName="ID_ACCOUNT" />
+                <ScalarProperty Name="ID_USERAC" ColumnName="ID_USERAC" />
+                <ScalarProperty Name="LOGIN" ColumnName="LOGIN" />
+                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USERINF">
+            <EntityTypeMapping TypeName="Model.USERINF">
+              <MappingFragment StoreEntitySet="USERINF">
+                <ScalarProperty Name="ID_USER" ColumnName="ID_USER" />
+                <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
+                <ScalarProperty Name="USER_EMAIL" ColumnName="USER_EMAIL" />
+                <ScalarProperty Name="USER_NUMER" ColumnName="USER_NUMER" />
+                <ScalarProperty Name="USER_SEX" ColumnName="USER_SEX" />
+                <ScalarProperty Name="USER_BIRTHYEAR" ColumnName="USER_BIRTHYEAR" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ORDERS">
+            <EntityTypeMapping TypeName="Model.ORDERS">
+              <MappingFragment StoreEntitySet="ORDERS">
+                <ScalarProperty Name="ID_ORDERS" ColumnName="ID_ORDERS" />
+                <ScalarProperty Name="ID_BOOK" ColumnName="ID_BOOK" />
+                <ScalarProperty Name="NUMBERORDEREDBOOKS" ColumnName="NUMBERORDEREDBOOKS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ADD_AUTHORS" FunctionName="Хранилище Model.ADD_AUTHORS" />
+          <FunctionImportMapping FunctionImportName="ADD_GENRES" FunctionName="Хранилище Model.ADD_GENRES" />
+          <FunctionImportMapping FunctionImportName="ADD_NEW_BOOK" FunctionName="Хранилище Model.ADD_NEW_BOOK" />
+          <FunctionImportMapping FunctionImportName="ADDNEWBOOK" FunctionName="Хранилище Model.ADDNEWBOOK" />
+          <FunctionImportMapping FunctionImportName="BOOKALLINF" FunctionName="Хранилище Model.BOOKALLINF" />
+          <FunctionImportMapping FunctionImportName="BOOKINF" FunctionName="Хранилище Model.BOOKINF" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model.BOOKINF_Result">
+                <ScalarProperty Name="ID_BOOK" ColumnName="ID_BOOK" />
+                <ScalarProperty Name="BOOK_NAME" ColumnName="BOOK_NAME" />
+                <ScalarProperty Name="PAGE_NUMBER" ColumnName="PAGE_NUMBER" />
+                <ScalarProperty Name="ISBN" ColumnName="ISBN" />
+                <ScalarProperty Name="BOOKBINDINGTYPE" ColumnName="BOOKBINDINGTYPE" />
+                <ScalarProperty Name="YEAR_OF_PUBLICATION" ColumnName="YEAR_OF_PUBLICATION" />
+                <ScalarProperty Name="BOOK_LANGUAGE" ColumnName="BOOK_LANGUAGE" />
+                <ScalarProperty Name="BOOK_IMAGESOURCE" ColumnName="BOOK_IMAGESOURCE" />
+                <ScalarProperty Name="NUMBERSOFBOOKS" ColumnName="NUMBERSOFBOOKS" />
+                <ScalarProperty Name="BOOK_PRISE" ColumnName="BOOK_PRISE" />
+                <ScalarProperty Name="BOOK_DESCRIPTION" ColumnName="BOOK_DESCRIPTION" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="BOOKINFAVAILABILITY" FunctionName="Хранилище Model.BOOKINFAVAILABILITY" />
+          <FunctionImportMapping FunctionImportName="BOOKINF_NON_AVAILABILITY" FunctionName="Хранилище Model.BOOKINF_NON_AVAILABILITY" />
+          <FunctionImportMapping FunctionImportName="CHECKBOOKAVAILABILITYCURS" FunctionName="Хранилище Model.CHECKBOOKAVAILABILITYCURS" />
+          <FunctionImportMapping FunctionImportName="ENTERUSER" FunctionName="Хранилище Model.ENTERUSER" />
+          <FunctionImportMapping FunctionImportName="EXPORT_AUTHORS_TO_XML" FunctionName="Хранилище Model.EXPORT_AUTHORS_TO_XML" />
+          <FunctionImportMapping FunctionImportName="FIND_BOOKS_BY_TITLE" FunctionName="Хранилище Model.FIND_BOOKS_BY_TITLE" />
+          <FunctionImportMapping FunctionImportName="GETALLGENRESINF" FunctionName="Хранилище Model.GETALLGENRESINF" />
+          <FunctionImportMapping FunctionImportName="GET_BOOK_BYAUTHOR" FunctionName="Хранилище Model.GET_BOOK_BYAUTHOR" />
+          <FunctionImportMapping FunctionImportName="GET_BOOK_BYGENRE" FunctionName="Хранилище Model.GET_BOOK_BYGENRE" />
+          <FunctionImportMapping FunctionImportName="GET_BOOK_BYLANGUAGE" FunctionName="Хранилище Model.GET_BOOK_BYLANGUAGE" />
+          <FunctionImportMapping FunctionImportName="GETORDERSINF" FunctionName="Хранилище Model.GETORDERSINF" />
+          <FunctionImportMapping FunctionImportName="GETPUBLISHERINF" FunctionName="Хранилище Model.GETPUBLISHERINF" />
+          <FunctionImportMapping FunctionImportName="GETUSERSINF" FunctionName="Хранилище Model.GETUSERSINF" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model.GETUSERSINF_Result">
+                <ScalarProperty Name="ID_ACCOUNT" ColumnName="ID_ACCOUNT" />
+                <ScalarProperty Name="ID_USERAC" ColumnName="ID_USERAC" />
+                <ScalarProperty Name="LOGIN" ColumnName="LOGIN" />
+                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+                <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
+                <ScalarProperty Name="USER_EMAIL" ColumnName="USER_EMAIL" />
+                <ScalarProperty Name="USER_NUMER" ColumnName="USER_NUMER" />
+                <ScalarProperty Name="USER_SEX" ColumnName="USER_SEX" />
+                <ScalarProperty Name="USER_BIRTHYEAR" ColumnName="USER_BIRTHYEAR" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="IMPORT_AUTHORS_FROM_XML" FunctionName="Хранилище Model.IMPORT_AUTHORS_FROM_XML" />
+          <FunctionImportMapping FunctionImportName="INSERTHUGEDATA" FunctionName="Хранилище Model.INSERTHUGEDATA" />
+          <FunctionImportMapping FunctionImportName="INSERTORDERINF" FunctionName="Хранилище Model.INSERTORDERINF" />
+          <FunctionImportMapping FunctionImportName="SEARCH_BOOKS_BYPAGERANGE" FunctionName="Хранилище Model.SEARCH_BOOKS_BYPAGERANGE" />
+          <FunctionImportMapping FunctionImportName="SEARCH_BOOKS_BYYEAR_OF_PUBLICATION" FunctionName="Хранилище Model.SEARCH_BOOKS_BYYEAR_OF_PUBLICATION" />
+          <FunctionImportMapping FunctionImportName="SEARCH_BOOKS_BYYEARRANGE" FunctionName="Хранилище Model.SEARCH_BOOKS_BYYEARRANGE" />
+          <FunctionImportMapping FunctionImportName="TESTENTER" FunctionName="Хранилище Model.TESTENTER" />
+          <FunctionImportMapping FunctionImportName="UPDATE_AUTHORS2" FunctionName="Хранилище Model.UPDATE_AUTHORS2" />
+          <FunctionImportMapping FunctionImportName="UPDATE_BOOKINF" FunctionName="Хранилище Model.UPDATE_BOOKINF" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

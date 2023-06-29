@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище ModelContainer" CdmEntityContainer="Entities">
+    <EntitySetMapping Name="AUTHOR">
+      <EntityTypeMapping TypeName="Model.AUTHOR">
+        <MappingFragment StoreEntitySet="AUTHOR">
+          <ScalarProperty Name="ID_AUTHOR" ColumnName="ID_AUTHOR" />
+          <ScalarProperty Name="FULLNAME" ColumnName="FULLNAME" />
+          <ScalarProperty Name="BIRTHYEAR" ColumnName="BIRTHYEAR" />
+          <ScalarProperty Name="BIRTHCOUNTRY" ColumnName="BIRTHCOUNTRY" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BOOK">
+      <EntityTypeMapping TypeName="Model.BOOK">
+        <MappingFragment StoreEntitySet="BOOK">
+          <ScalarProperty Name="ID_BOOK" ColumnName="ID_BOOK" />
+          <ScalarProperty Name="BOOK_NAME" ColumnName="BOOK_NAME" />
+          <ScalarProperty Name="PAGE_NUMBER" ColumnName="PAGE_NUMBER" />
+          <ScalarProperty Name="ISBN" ColumnName="ISBN" />
+          <ScalarProperty Name="BOOKBINDINGTYPE" ColumnName="BOOKBINDINGTYPE" />
+          <ScalarProperty Name="YEAR_OF_PUBLICATION" ColumnName="YEAR_OF_PUBLICATION" />
+          <ScalarProperty Name="BOOK_ID_PUBLISHINGHOUSE" ColumnName="BOOK_ID_PUBLISHINGHOUSE" />
+          <ScalarProperty Name="BOOK_LANGUAGE" ColumnName="BOOK_LANGUAGE" />
+          <ScalarProperty Name="BOOK_DESCRIPTION" ColumnName="BOOK_DESCRIPTION" />
+          <ScalarProperty Name="BOOK_IMAGESOURCE" ColumnName="BOOK_IMAGESOURCE" />
+          <ScalarProperty Name="NUMBERSOFBOOKS" ColumnName="NUMBERSOFBOOKS" />
+          <ScalarProperty Name="BOOK_PRISE" ColumnName="BOOK_PRISE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GENRE">
+      <EntityTypeMapping TypeName="Model.GENRE">
+        <MappingFragment StoreEntitySet="GENRE">
+          <ScalarProperty Name="GENRECODE" ColumnName="GENRECODE" />
+          <ScalarProperty Name="NAMEGENRE" ColumnName="NAMEGENRE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ORDERINF">
+      <EntityTypeMapping TypeName="Model.ORDERINF">
+        <MappingFragment StoreEntitySet="ORDERINF">
+          <ScalarProperty Name="ID_ORDER" ColumnName="ID_ORDER" />
+          <ScalarProperty Name="ID_USER" ColumnName="ID_USER" />
+          <ScalarProperty Name="ORDER_DATE" ColumnName="ORDER_DATE" />
+          <ScalarProperty Name="DELIVERY_TIME" ColumnName="DELIVERY_TIME" />
+          <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PUBLISHERHOUSE">
+      <EntityTypeMapping TypeName="Model.PUBLISHERHOUSE">
+        <MappingFragment StoreEntitySet="PUBLISHERHOUSE">
+          <ScalarProperty Name="ID_PUBLISHINGHOUSE" ColumnName="ID_PUBLISHINGHOUSE" />
+          <ScalarProperty Name="PUBLISHINGHOUSE_NAME" ColumnName="PUBLISHINGHOUSE_NAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USERACCOUNT">
+      <EntityTypeMapping TypeName="Model.USERACCOUNT">
+        <MappingFragment StoreEntitySet="USERACCOUNT">
+          <ScalarProperty Name="ID_ACCOUNT" ColumnName="ID_ACCOUNT" />
+          <ScalarProperty Name="ID_USERAC" ColumnName="ID_USERAC" />
+          <ScalarProperty Name="LOGIN" ColumnName="LOGIN" />
+          <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USERINF">
+      <EntityTypeMapping TypeName="Model.USERINF">
+        <MappingFragment StoreEntitySet="USERINF">
+          <ScalarProperty Name="ID_USER" ColumnName="ID_USER" />
+          <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
+          <ScalarProperty Name="USER_EMAIL" ColumnName="USER_EMAIL" />
+          <ScalarProperty Name="USER_NUMER" ColumnName="USER_NUMER" />
+          <ScalarProperty Name="USER_SEX" ColumnName="USER_SEX" />
+          <ScalarProperty Name="USER_BIRTHYEAR" ColumnName="USER_BIRTHYEAR" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ORDERS">
+      <EntityTypeMapping TypeName="Model.ORDERS">
+        <MappingFragment StoreEntitySet="ORDERS">
+          <ScalarProperty Name="ID_ORDERS" ColumnName="ID_ORDERS" />
+          <ScalarProperty Name="ID_BOOK" ColumnName="ID_BOOK" />
+          <ScalarProperty Name="NUMBERORDEREDBOOKS" ColumnName="NUMBERORDEREDBOOKS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="ADDNEWBOOK" FunctionName="Хранилище Model.ADDNEWBOOK" />
+    <FunctionImportMapping FunctionImportName="BOOKALLINF" FunctionName="Хранилище Model.BOOKALLINF" />
+    <FunctionImportMapping FunctionImportName="BOOKINF" FunctionName="Хранилище Model.BOOKINF">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Model.BOOKINF_Result">
+          <ScalarProperty Name="ID_BOOK" ColumnName="ID_BOOK" />
+          <ScalarProperty Name="BOOK_NAME" ColumnName="BOOK_NAME" />
+          <ScalarProperty Name="PAGE_NUMBER" ColumnName="PAGE_NUMBER" />
+          <ScalarProperty Name="ISBN" ColumnName="ISBN" />
+          <ScalarProperty Name="BOOKBINDINGTYPE" ColumnName="BOOKBINDINGTYPE" />
+          <ScalarProperty Name="YEAR_OF_PUBLICATION" ColumnName="YEAR_OF_PUBLICATION" />
+          <ScalarProperty Name="PUBLISHINGHOUSE_NAME" ColumnName="PUBLISHINGHOUSE_NAME" />
+          <ScalarProperty Name="BOOK_LANGUAGE" ColumnName="BOOK_LANGUAGE" />
+          <ScalarProperty Name="BOOK_IMAGESOURCE" ColumnName="BOOK_IMAGESOURCE" />
+          <ScalarProperty Name="BOOK_PRISE" ColumnName="BOOK_PRISE" />
+          <ScalarProperty Name="BOOK_DESCRIPTION" ColumnName="BOOK_DESCRIPTION" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ENTERUSER" FunctionName="Хранилище Model.ENTERUSER" />
+    <FunctionImportMapping FunctionImportName="GETALLAUTHORSINF" FunctionName="Хранилище Model.GETALLAUTHORSINF" />
+    <FunctionImportMapping FunctionImportName="GETALLGENRESINF" FunctionName="Хранилище Model.GETALLGENRESINF" />
+    <FunctionImportMapping FunctionImportName="GETUSERSINF" FunctionName="Хранилище Model.GETUSERSINF" />
+    <FunctionImportMapping FunctionImportName="TESTENTER" FunctionName="Хранилище Model.TESTENTER" />
+  </EntityContainerMapping>
+</Mapping>

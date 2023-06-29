@@ -1,0 +1,618 @@
+﻿<Window x:Class="CourseProj.MainWindovNoLog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:CourseProj"
+        
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    
+    Title="Book Shop"
+    Width="1300"
+    Height="600"
+    FontFamily="Calibri"
+    Icon="./Imgs/bookshel.png"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d"
+    Style="{DynamicResource WinBg}" 
+    
+    >
+    <Window.Resources>
+        <!--///////////////////////////////////////////////////////////-->
+        <Style TargetType="Button">
+            <Style.Triggers>
+
+                <EventTrigger RoutedEvent="Click">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation
+                                    AutoReverse="True"
+                                    Storyboard.TargetProperty="Width"
+                                    To="100"
+                                    Duration="0:0:0.4" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+
+            </Style.Triggers>
+        </Style>
+
+        <!--///////////////////////////////////////////////////////////-->
+    </Window.Resources>
+
+    <Window.CommandBindings>
+        <CommandBinding   Executed="EngLocal_Selected" />
+        <CommandBinding   Executed="RusLocal_Selected" />
+        <!--///////////////////////////////////////////////////////////-->
+
+    </Window.CommandBindings>
+
+    <Border BorderThickness="4" CornerRadius="130">
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.2*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="0.5*" />
+                <ColumnDefinition Width="0.45*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.15*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+
+            <Grid Grid.Row="0" Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition  Height="*"/>
+                    <RowDefinition  Height="0.5*"/>
+                </Grid.RowDefinitions>
+
+                <Image
+                    Grid.Row="0"
+                    Height="73"
+                     Width="58"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Source="./Imgs/bookshel.png" Grid.RowSpan="2" 
+                    />
+                <TextBlock 
+                    Grid.Row="1"
+                    HorizontalAlignment="Center"
+                     VerticalAlignment="Center" 
+                      Margin="0,0,0,2"
+                     FontSize="16" 
+                     Foreground="#FF7CDCC4" 
+                     FontWeight="Bold" 
+                    >
+                             Bookly
+                </TextBlock>
+            </Grid>
+
+            <Grid Grid.Row="0" Grid.Column="1">
+
+                <TextBox
+                    x:Name="SearchBox"
+                    MaxHeight="40"
+                    Margin="15,0,10,10"
+                    BorderThickness="2,2,2,3"
+                    FontSize="20"
+                    Foreground="#FF0B9D79"
+                    BorderBrush="#FF67BBA6"
+                    SelectionBrush="#FF56C368" 
+                    TextAlignment="Left"
+                    Background="Transparent"
+                    TextChanged="SearchBox_TextChanged">
+                    
+                    <TextBox.InputBindings>
+                        <KeyBinding Key="Return" Command="{Binding EnterSearch}" />
+                    </TextBox.InputBindings>
+
+                </TextBox>
+
+            </Grid>
+            <Grid Grid.Row="0" Grid.Column="2">
+
+                <StackPanel VerticalAlignment="Center"
+                            Orientation="Horizontal"
+                            Margin="35 0 0 0">
+                    <RadioButton
+                                  x:Name="VNalich"
+                                   VerticalContentAlignment="Center"
+                                   Content="В наличии"
+                                  Foreground="White" 
+                                  BorderBrush="{x:Null}" 
+                                    FontSize="16"
+                                  IsChecked="True"
+                                  />
+                    <RadioButton   x:Name="NoNalich"
+                                   Margin="40 0 0 0"
+                                    VerticalContentAlignment="Center"
+                                    Content="Нет в наличии"
+                                   Foreground="White"
+                                   BorderBrush="{x:Null}" FontSize="16"
+                                   
+                                   />
+                </StackPanel>
+
+            </Grid>
+
+
+
+            <Grid
+                Grid.Row="0"
+                Grid.Column="3"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+
+                <StackPanel Orientation="Horizontal">
+
+                    <Button
+                        Padding="10,5"
+                        BorderThickness="0"
+                        FontSize="16"
+                        Width="28"
+                        Height="27" 
+                        OpacityMask="#FFD9D6D6"
+                        Style="{DynamicResource SottItm}" >
+
+                    </Button>
+
+
+                    <Button x:Name="Button1"
+                            Margin="25,0,0,0"
+                            Width="80" 
+                            Height="30"
+                            Cursor="Hand"
+                            Content="Войти"
+                            Style="{DynamicResource ButtonStyleTW}"
+                            Template="{DynamicResource ButtonTemplate}"
+                            Click="Enter_Click"
+                      />
+
+                </StackPanel>
+            </Grid>
+
+
+
+            <Grid
+                    Grid.Row="1"
+                    Grid.Column="4"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Margin="0,50,0,0"
+                >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="12*" />
+                    <ColumnDefinition Width="*" />
+
+
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+
+                </Grid.RowDefinitions>
+
+                <WrapPanel
+                         Grid.RowSpan="4"
+                         Grid.ColumnSpan="1"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Top"
+                         Orientation="Vertical"
+                         Style="{DynamicResource CyanBgStyle2}"
+                         Background="{x:Null}">
+
+                    <TextBlock
+                        Style="{DynamicResource SettingsTxtBlck}"
+                        Text="{DynamicResource h_Exp3}" 
+                        FontSize="16" 
+                         HorizontalAlignment="Center"
+                        />
+                    <WrapPanel
+                                 Width="Auto"
+                                 HorizontalAlignment="Center"
+                                 Orientation="Horizontal">
+                        <Button
+                               x:Name="RusLocal"
+                                 
+                               Content="{DynamicResource cbi_rus}"
+                               Style="{DynamicResource ButtonStyleTW}"
+                            Template="{DynamicResource ButtonTemplate}"
+                            />
+
+                        <Button
+                               x:Name="EnLocal"
+                                 
+                                Content="{DynamicResource cbi_en}"
+                                Style="{DynamicResource ButtonStyleTW}"
+                            Template="{DynamicResource ButtonTemplate}"
+                            />
+                    </WrapPanel>
+
+                    <TextBlock Style="{DynamicResource SettingsTxtBlck}" 
+                               Text="{DynamicResource h_Exp1}" 
+                               FontSize="16"
+                                Margin="0,10,0, 7"
+                             HorizontalAlignment="Center"
+                               
+                               />
+                    <WrapPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                        <Button
+                                x:Name="btnPixel"
+                                Click="btnCursor_Click"
+                            Content="{DynamicResource but_PixCur}" 
+                             Style="{DynamicResource ButtonStyleTW}"
+                            />
+                        <Button
+                                x:Name="btnPony"
+                                Click="btnCursor_Click"
+                            Content="{DynamicResource btnPony}" 
+                             Style="{DynamicResource ButtonStyleTW}"
+                            />
+                        <Button
+                                x:Name="btnGeometric"
+                                Click="btnCursor_Click"
+                            Content="{DynamicResource but_geomCur}" 
+                             Style="{DynamicResource ButtonStyleTW}"
+                            
+                            />
+                    </WrapPanel>
+
+                    <!--///////////////////////////////////////////////////////////-->
+
+                    <TextBlock
+                        Style="{DynamicResource SettingsTxtBlck}"
+                        Text="{DynamicResource h_Theme}" 
+                        FontSize="16" 
+                         Margin="0,10,0, 7"
+                         HorizontalAlignment="Center"
+                        />
+                    <WrapPanel
+                                 Width="Auto"
+                                 HorizontalAlignment="Center"
+                                 Orientation="Horizontal">
+                        <Button
+                               x:Name="Green"
+                                Click="Green_Selected"
+                                Content="{DynamicResource theme_Green}"
+                             Style="{DynamicResource ButtonStyle}"
+                            />
+
+                        <Button
+                               x:Name="DarkTheme"
+                               Click="Dark_Selected"
+                               Content="{DynamicResource theme_Dark}" 
+                             Style="{DynamicResource ButtonStyle}"
+                            />
+
+
+                    </WrapPanel>
+
+                    <CheckBox
+                       x:Name="checkBoxDis"
+                        Cursor="Hand"
+                       Margin="10,5,0,0"
+                       VerticalContentAlignment="Center"
+                       Content="{DynamicResource checkBoxDis}" 
+                        Style="{DynamicResource checkBoxDisTxt}"
+                        
+                        />
+
+
+                </WrapPanel>
+
+            </Grid>
+
+
+
+            <TabControl
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Style="{DynamicResource TabControlStyle}" 
+                Background="White" 
+                BorderThickness="0,0,0,0"
+                BorderBrush="#00ACACAC"              
+               >
+                <TabItem 
+                    Width="0"
+                    Height="0"
+                    Background="#FF37957E" 
+                    BorderThickness="0,0,0,0"
+                     BorderBrush="#00ACACAC" 
+                    Foreground="#00000000"
+                    >
+
+                    <TabItem.Content >
+                        <ListBox
+                            Name="Books"
+                            Grid.Row="1"
+                            Grid.ColumnSpan="5"
+                            Style="{DynamicResource ListBoxBg}" 
+                            Background="#FF43CBA9" 
+                           
+                            
+                            >
+                            <ListBox.ItemTemplate  >
+                                <DataTemplate >
+
+                                    <Grid  Margin="0 20 0  0" 
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Center">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="0.6*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid Grid.Row="0" Grid.Column="0" 
+                                              HorizontalAlignment="Center" 
+                                              VerticalAlignment="Top"
+                                              Width="350" 
+                                              Margin="0,0,0,20" 
+                                                >
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="0.3*" />
+                                                <RowDefinition Height="0*" />
+                                                <RowDefinition Height="0*" />
+                                                <RowDefinition Height="0*" />
+                                                <RowDefinition Height="0*" />
+                                                <RowDefinition Height="0*" />
+                                                <RowDefinition Height="0*" />
+                                                <!-- 5 cost -->
+                                            </Grid.RowDefinitions>
+
+                                            <Grid Grid.Row="0" Grid.Column="0" 
+                                              HorizontalAlignment="Center">
+
+                                                <Image
+                                                x:Name="ProductsPhoto"
+                                                Width="300"
+                                                Height="200"
+                                                Source="{Binding BOOK_IMAGESOURCE}"
+                                                VerticalAlignment="Center"/>
+
+                                            </Grid>
+
+                                            <Grid
+                                                Grid.Row="1"
+                                                Grid.Column="0"
+                                                Margin="0,10,0,0"
+                                                HorizontalAlignment="Center"
+                                                >
+                                                <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                                    <TextBlock
+                                                        x:Name="BookNameInput"
+                                                        Margin="0,0,0,5"
+                                                        FontSize="24"
+                                                        Text="{Binding BOOK_NAME}" 
+                                                        />
+
+                                                </StackPanel>
+                                            </Grid>
+
+                                            <Grid Grid.Row="2" Grid.Column="0"  HorizontalAlignment="Center"
+                                                  Margin="0 0 0 5"
+                                                  >
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock FontSize="18" Text="{DynamicResource b_Autor}" Foreground="#FFBEFFE3" />
+                                                    <TextBlock FontSize="18" Text=": " Foreground="#FFBEFFE3"  />
+                                                    <TextBlock
+                                                        x:Name="autorInput"
+                                                        FontSize="18"
+                                                        Text="{Binding AuthorsString}" />
+
+                                                </StackPanel>
+                                            </Grid>
+                                            <Grid Grid.Row="3" Grid.Column="0" 
+                                                  HorizontalAlignment="Center"
+                                                   Margin="0 20 0 5"
+                                                  >
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock FontSize="18" Text="Жанр" Foreground="#FFBEFFE3"  />
+                                                    <TextBlock FontSize="18" Text=": " Foreground="#FFBEFFE3"  />
+                                                    <TextBlock
+                                                        x:Name="GenreInput"
+                                                        FontSize="18"
+                                                        Text="{Binding GenresString}" />
+
+                                                </StackPanel>
+                                            </Grid>
+
+
+                                            <Grid Grid.Row="4"
+                                                  Grid.Column="0"
+                                                  HorizontalAlignment="Center" 
+                                                   Margin="0 5 0 0"
+                                                  >
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock FontSize="18" Text="Количество страниц" Foreground="#FFBEFFE3" />
+                                                    <TextBlock FontSize="18" Text=": " Foreground="#FFBEFFE3" />
+                                                    <TextBlock
+                                                        x:Name="PagesInput"
+                                                        FontSize="18"
+                                                        Text="{Binding PAGE_NUMBER}" />
+
+                                                </StackPanel>
+                                            </Grid>
+                                            <Grid Grid.Row="5"
+                                                  Grid.Column="0"  
+                                                  HorizontalAlignment="Center"
+                                                  Margin="0 5 0 0"
+                                                  >
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock FontSize="18" Text="Язык"  Foreground="#FFBEFFE3"  />
+                                                    <TextBlock FontSize="18" Text=": " Foreground="#FFBEFFE3" />
+                                                    <TextBlock
+                                                        x:Name="languageInput"
+                                                        FontSize="18"
+                                                        Text="{Binding LANGUAGE}" />
+
+                                                </StackPanel>
+                                            </Grid>
+                                            <Grid Grid.Row="6"
+                                                  Grid.Column="0" 
+                                                  HorizontalAlignment="Center" 
+                                                   Margin="0 5 0 0"
+                                                  >
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock FontSize="18" Text="Цена" Foreground="#FFBEFFE3"  />
+                                                    <TextBlock FontSize="18" Text=": " Foreground="#FFBEFFE3" />
+                                                    <TextBlock
+                                                        x:Name="PriceInput"
+                                                        FontSize="18"
+                                                        Text="{Binding BOOKPRICE}" />
+                                                    <TextBlock FontSize="18" Text=" Byn" Foreground="White"  />
+
+                                                </StackPanel>
+                                            </Grid>
+
+                                        </Grid>
+
+
+
+
+                                        <!--///////////////////////// 1 вложен грид //////////////////////////////////-->
+                                        <Grid Grid.Row="0" 
+                                              Grid.Column="1"
+                                              HorizontalAlignment="Left"
+                                              VerticalAlignment="Center"  
+                                              Margin="0 15 0 0"
+                                              >
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="0.3*" />
+                                                <!-- 0  bind type-->
+                                                <RowDefinition Height="0.3*" />
+                                                <RowDefinition Height="0.3*" />
+                                                <RowDefinition Height="0.3*" />
+                                                <RowDefinition Height="0.3*" />
+                                                <RowDefinition Height="0.3*" />
+                                                <!-- 5 descript -->
+                                            </Grid.RowDefinitions>
+
+
+                                            <Grid Grid.Row="0"
+                                                  Grid.Column="1"
+                                                  Margin="0 0 0 0"
+                                                  HorizontalAlignment="Left" 
+                                                  >
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock FontSize="18" Text="{DynamicResource b_Binding_type}" Foreground="#FFBEFFE3"/>
+                                                    <TextBlock FontSize="18" Text=": " Foreground="#FFBEFFE3"/>
+                                                    <TextBlock
+                                                        x:Name="bindingtypeInput"
+                                                        FontSize="18"
+                                                        Text="{Binding BOOKBINSINGTYPE}" />
+                                                </StackPanel>
+                                            </Grid>
+
+                                            <Grid Grid.Row="1"
+                                                  Grid.Column="1"
+                                                  Margin="0 5 0 0"
+                                                  HorizontalAlignment="Left" 
+                                                  >
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock FontSize="18" Text="Год публикации" Foreground="#FFBEFFE3"/>
+                                                    <TextBlock FontSize="18" Text=": " Foreground="#FFBEFFE3" />
+                                                    <TextBlock
+                                                        x:Name="yearOfPublicationInput"
+                                                        FontSize="18"
+                                                        Text="{Binding YEAR_OF_PUBLICATION}" />
+                                                </StackPanel>
+                                            </Grid>
+
+                                            <Grid Grid.Row="2"
+                                                  Grid.Column="1"
+                                                  Margin="0 5 0 0"
+                                                  HorizontalAlignment="Left" 
+                                                  >
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock FontSize="18" Text="Издательство" Foreground="#FFBEFFE3"/>
+                                                    <TextBlock FontSize="18" Text=": " Foreground="#FFBEFFE3"/>
+                                                    <TextBlock
+                                                        x:Name="PublisherHouseInput"
+                                                        FontSize="18"
+                                                        Text="{Binding PublisherHouseString}" />
+                                                </StackPanel>
+                                            </Grid>
+
+                                            <Grid Grid.Row="3"
+                                                  Grid.Column="1"
+                                                  Margin="0 5 0 0"
+                                                  HorizontalAlignment="Left" 
+                                                  >
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock FontSize="18" Text="ISBN" Foreground="#FFBEFFE3"/>
+                                                    <TextBlock FontSize="18" Text=": " Foreground="#FFBEFFE3"/>
+                                                    <TextBlock
+                                                        x:Name="ISBNInput"
+                                                        FontSize="18"
+                                                        Text="{Binding ISBN}" />
+                                                </StackPanel>
+                                            </Grid>
+
+                                            <Grid Grid.Row="4"
+                                                  Grid.Column="1"
+                                                  Margin="0 5 0 0"
+                                                  HorizontalAlignment="Left" 
+                                                  >
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock FontSize="18" Text="Количество книг" Foreground="#FFBEFFE3"/>
+                                                    <TextBlock FontSize="18" Text=": " Foreground="#FFBEFFE3"/>
+                                                    <TextBlock
+                                                        x:Name="NumberOfBooksInput"
+                                                        FontSize="18"
+                                                        Text="{Binding NUMBERSOFBOOKS}" />
+                                                </StackPanel>
+                                            </Grid>
+
+                                            <Grid Grid.Row="5"
+                                                  Grid.Column="1"
+                                                  Margin="0 5 0 0"
+                                                  HorizontalAlignment="Left" 
+                                                  >
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock FontSize="18" Text="Описание" Foreground="#FFBEFFE3"/>
+                                                    <TextBlock FontSize="18" Text=": " Foreground="#FFBEFFE3"/>
+                                                    <TextBlock
+                                                        x:Name="BookDescriptionInput"
+                                                        FontSize="18"
+                                                        Text="{Binding DESCRIPTION}" 
+                                                        MaxWidth="520"
+                                                        Height="400"
+                                                        TextWrapping="Wrap"
+                                                        />
+                                                </StackPanel>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+
+                    </TabItem.Content>
+                </TabItem>
+
+
+            </TabControl>
+        </Grid>
+    </Border>
+</Window>

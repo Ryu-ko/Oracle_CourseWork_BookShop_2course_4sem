@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище Model" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="18.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AUTHOR">
+    <Key>
+      <PropertyRef Name="ID_AUTHOR" />
+    </Key>
+    <Property Name="ID_AUTHOR" Type="number" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="FULLNAME" Type="varchar2" MaxLength="60" Nullable="false" />
+    <Property Name="BIRTHYEAR" Type="number" Precision="38" Scale="0" />
+    <Property Name="BIRTHCOUNTRY" Type="varchar2" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BOOK">
+    <Key>
+      <PropertyRef Name="ID_BOOK" />
+    </Key>
+    <Property Name="ID_BOOK" Type="number" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="BOOK_NAME" Type="varchar2" MaxLength="200" Nullable="false" />
+    <Property Name="BOOK_AUTHOR" Type="varchar2" MaxLength="100" Nullable="false" />
+    <Property Name="BOOK_GENRE" Type="varchar2" MaxLength="50" Nullable="false" />
+    <Property Name="PAGE_NUMBER" Type="number" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="ISBN" Type="varchar2" MaxLength="20" Nullable="false" />
+    <Property Name="BOOKBINDINGTYPE" Type="varchar2" MaxLength="40" Nullable="false" />
+    <Property Name="YEAR_OF_PUBLICATION" Type="number" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="BOOK_ID_PUBLISHINGHOUSE" Type="number" Precision="38" Scale="0" />
+    <Property Name="BOOK_LANGUAGE" Type="varchar2" MaxLength="30" Nullable="false" />
+    <Property Name="BOOK_DESCRIPTION" Type="varchar2" MaxLength="3000" Nullable="false" />
+    <Property Name="BOOK_IMAGESOURCE" Type="varchar2" MaxLength="40" Nullable="false" />
+    <Property Name="NUMBERSOFBOOKS" Type="number" Precision="38" Scale="0" />
+    <Property Name="BOOK_PRISE" Type="number" Precision="5" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="GENRE">
+    <Key>
+      <PropertyRef Name="GENRECODE" />
+    </Key>
+    <Property Name="GENRECODE" Type="number" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="NAMEGENRE" Type="varchar2" MaxLength="60" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ORDERINF">
+    <Key>
+      <PropertyRef Name="ID_ORDER" />
+    </Key>
+    <Property Name="ID_ORDER" Type="number" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="ID_USER" Type="number" Precision="38" Scale="0" />
+    <Property Name="ORDER_DATE" Type="date" Nullable="false" />
+    <Property Name="DELIVERY_TIME" Type="date" Nullable="false" />
+    <Property Name="AMOUNT" Type="number" Precision="4" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PUBLISHERHOUSE">
+    <Key>
+      <PropertyRef Name="ID_PUBLISHINGHOUSE" />
+    </Key>
+    <Property Name="ID_PUBLISHINGHOUSE" Type="number" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="PUBLISHINGHOUSE_NAME" Type="varchar2" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <EntityType Name="USERACCOUNT">
+    <Key>
+      <PropertyRef Name="ID_ACCOUNT" />
+    </Key>
+    <Property Name="ID_ACCOUNT" Type="number" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="ID_USER" Type="number" Precision="38" Scale="0" />
+    <Property Name="LOGIN" Type="varchar2" MaxLength="40" />
+    <Property Name="PASSWORD" Type="varchar2" MaxLength="40" />
+  </EntityType>
+  <EntityType Name="USERINF">
+    <Key>
+      <PropertyRef Name="ID_USER" />
+    </Key>
+    <Property Name="ID_USER" Type="number" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="USER_NAME" Type="varchar2" MaxLength="100" Nullable="false" />
+    <Property Name="USER_EMAIL" Type="varchar2" MaxLength="40" Nullable="false" />
+    <Property Name="USER_NUMER" Type="varchar2" MaxLength="10" Nullable="false" />
+    <Property Name="USER_SEX" Type="varchar2" MaxLength="2" Nullable="false" />
+    <Property Name="USER_BIRTHYEAR" Type="date" Nullable="false" />
+  </EntityType>
+  <Association Name="SYS_C008591">
+    <End Role="USERINF" Type="Self.USERINF" Multiplicity="0..1" />
+    <End Role="USERACCOUNT" Type="Self.USERACCOUNT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERINF">
+        <PropertyRef Name="ID_USER" />
+      </Principal>
+      <Dependent Role="USERACCOUNT">
+        <PropertyRef Name="ID_USER" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SYS_C008596">
+    <End Role="USERINF" Type="Self.USERINF" Multiplicity="0..1" />
+    <End Role="ORDERINF" Type="Self.ORDERINF" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERINF">
+        <PropertyRef Name="ID_USER" />
+      </Principal>
+      <Dependent Role="ORDERINF">
+        <PropertyRef Name="ID_USER" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SYS_C008609">
+    <End Role="PUBLISHERHOUSE" Type="Self.PUBLISHERHOUSE" Multiplicity="0..1" />
+    <End Role="BOOK" Type="Self.BOOK" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PUBLISHERHOUSE">
+        <PropertyRef Name="ID_PUBLISHINGHOUSE" />
+      </Principal>
+      <Dependent Role="BOOK">
+        <PropertyRef Name="BOOK_ID_PUBLISHINGHOUSE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="ENTERUSER" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMINCORE">
+    <Parameter Name="ENTEREDLOGIN" Type="varchar2" Mode="In" />
+    <Parameter Name="ENTEREDPASSWORD" Type="varchar2" Mode="In" />
+    <Parameter Name="ENTERENDFIO" Type="varchar2" Mode="In" />
+    <Parameter Name="ENTEREDEMAIL" Type="varchar2" Mode="In" />
+    <Parameter Name="ENTEREDNUMBER" Type="varchar2" Mode="In" />
+    <Parameter Name="ENTEREDSEX" Type="varchar2" Mode="In" />
+    <Parameter Name="ENTEREDBIRTHDAY" Type="date" Mode="In" />
+  </Function>
+  <EntityContainer Name="Хранилище ModelContainer">
+    <EntitySet Name="AUTHOR" EntityType="Self.AUTHOR" Schema="ADMINCORE" store:Type="Tables" />
+    <EntitySet Name="BOOK" EntityType="Self.BOOK" Schema="ADMINCORE" store:Type="Tables" />
+    <EntitySet Name="GENRE" EntityType="Self.GENRE" Schema="ADMINCORE" store:Type="Tables" />
+    <EntitySet Name="ORDERINF" EntityType="Self.ORDERINF" Schema="ADMINCORE" store:Type="Tables" />
+    <EntitySet Name="PUBLISHERHOUSE" EntityType="Self.PUBLISHERHOUSE" Schema="ADMINCORE" store:Type="Tables" />
+    <EntitySet Name="USERACCOUNT" EntityType="Self.USERACCOUNT" Schema="ADMINCORE" store:Type="Tables" />
+    <EntitySet Name="USERINF" EntityType="Self.USERINF" Schema="ADMINCORE" store:Type="Tables" />
+    <AssociationSet Name="SYS_C008591" Association="Self.SYS_C008591">
+      <End Role="USERINF" EntitySet="USERINF" />
+      <End Role="USERACCOUNT" EntitySet="USERACCOUNT" />
+    </AssociationSet>
+    <AssociationSet Name="SYS_C008596" Association="Self.SYS_C008596">
+      <End Role="USERINF" EntitySet="USERINF" />
+      <End Role="ORDERINF" EntitySet="ORDERINF" />
+    </AssociationSet>
+    <AssociationSet Name="SYS_C008609" Association="Self.SYS_C008609">
+      <End Role="PUBLISHERHOUSE" EntitySet="PUBLISHERHOUSE" />
+      <End Role="BOOK" EntitySet="BOOK" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

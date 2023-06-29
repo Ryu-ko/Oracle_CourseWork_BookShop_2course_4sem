@@ -1,0 +1,15 @@
+[{"Id":"1",
+"Title":"Toyota Supra",
+"Power":"400",
+"Bodytype":"Coupe",
+"Year":"1990",
+"Cost":"45 000 $",
+"ImgPath":"./Imgs/bookKerry.jpg"},
+
+{"Id":"2",
+"Title":"Chevrollet Impala",
+"Power":"170",
+"Bodytype":"Sedan",
+"Year":"1967",
+"Cost":"32 000 $",
+"ImgPath":"./Imgs/bookhaksliNewBraveWorld.jpg"}]

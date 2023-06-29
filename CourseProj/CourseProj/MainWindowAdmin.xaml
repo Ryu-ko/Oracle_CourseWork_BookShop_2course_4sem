@@ -1,0 +1,374 @@
+﻿<Window
+    x:Class="CourseProj.MainWindowAdmin"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:CourseProj"
+   
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Book Shop"
+    Width="1300"
+    Height="600"
+    FontFamily="Calibri"
+    Icon="./Imgs/bookshel.png"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d"
+    Style="{DynamicResource WinBg}" 
+    
+    >
+
+
+    <Window.Resources>
+        <!--///////////////////////////////////////////////////////////-->
+        <Style TargetType="Button">
+            <Style.Triggers>
+
+                <EventTrigger RoutedEvent="Click">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation
+                                    AutoReverse="True"
+                                    Storyboard.TargetProperty="Width"
+                                    To="100"
+                                    Duration="0:0:0.4" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+
+            </Style.Triggers>
+        </Style>
+
+        <!--///////////////////////////////////////////////////////////-->
+    </Window.Resources>
+
+    <Window.CommandBindings>
+        <CommandBinding   Executed="EngLocal_Selected" />
+        <CommandBinding   Executed="RusLocal_Selected" />
+        <!--///////////////////////////////////////////////////////////-->
+
+    </Window.CommandBindings>
+    
+    <Border BorderThickness="4" CornerRadius="130">
+        
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.2*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="0.6*" />
+                <ColumnDefinition Width="0.3*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.15*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+
+            <Grid Grid.Row="0" Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition  Height="*"/>
+                    <RowDefinition  Height="0.5*"/>
+                </Grid.RowDefinitions>
+
+                <Image
+                    Grid.Row="0"
+                    Height="73"
+                     Width="58"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Source="./Imgs/bookshel.png" Grid.RowSpan="2" 
+                    />
+                <TextBlock 
+                    Grid.Row="1"
+                    HorizontalAlignment="Center"
+                     VerticalAlignment="Center" 
+                      Margin="0,0,0,2"
+                     FontSize="16" 
+                     Foreground="#FF7CDCC4" 
+                     FontWeight="Bold" 
+                    >
+                             Bookly
+                </TextBlock>
+            </Grid>
+
+            <Grid Grid.Row="0" Grid.Column="1">
+
+                <TextBox
+                    x:Name="SearchBox"
+                    MaxHeight="40"
+                    Margin="15,0,10,10"
+                    BorderThickness="2,2,2,3"
+                    FontSize="24"
+                    Foreground="#FF0B9D79"
+                    TextChanged="SearchBox_TextChanged" 
+                    BorderBrush="#FF67BBA6"
+                    SelectionBrush="#FF56C368" 
+                    TextAlignment="Center" 
+                    Background="Transparent" />
+
+            </Grid>
+
+            <Grid
+                Grid.Row="0"
+                Grid.Column="2"
+                VerticalAlignment="Center">
+
+                <Button
+                    x:Name="AddItemTxtBlck"
+                    MaxHeight="40"
+                    Margin="0,0,0,0"
+                    Background="Transparent"
+                    BorderThickness="0"
+                     Click="AddItem_func"
+                    FontSize="16"
+                    Content="{DynamicResource add_book}" 
+                    Style="{DynamicResource AddItm}"
+                    
+                    />
+
+            </Grid>
+            <Grid
+                Grid.Row="0"
+                Grid.Column="3"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+
+                <StackPanel Orientation="Horizontal">
+
+                    <Button
+                        Padding="10,5"
+                        BorderThickness="0"
+                        
+                        FontSize="16"
+                        Width="28"
+                        Height="27" 
+                        OpacityMask="#FFD9D6D6"
+                        Style="{DynamicResource SottItm}" >
+
+                    </Button>
+
+                
+                    <Button x:Name="Button1"
+                            Margin="25,0,0,0"
+                            Width="80" 
+                            Height="30"
+                            Cursor="Hand"
+                            Content="Выход"
+                            Style="{DynamicResource ButtonStyleTW}"
+                            Template="{DynamicResource ButtonTemplate}"
+                            Click="ExitAdminPageMain_Click"
+                      />
+
+                </StackPanel>
+            </Grid>
+            <Button
+                    x:Name="WatchOrdersBlck"
+                    MaxHeight="40"
+                    Margin="0,20,0,0"
+                     Grid.Row="1"
+                    Grid.Column="4"
+                    Background="#0C474747"
+                    BorderThickness="0"
+                    Click="WatchOrders_Click"
+                    FontSize="16"
+                    Content="Посмотреть заказы" 
+                    Style="{DynamicResource AddItm}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    
+                    />
+
+           
+
+            <Button
+                    x:Name="WatchUsersBlck"
+                    MaxHeight="40"
+                    Margin="0,100,0,0"
+                     Grid.Row="1"
+                    Grid.Column="4"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Click="WatchtUsers_Click"
+                    FontSize="16"
+                    Content="Пользователи" 
+                    Style="{DynamicResource AddItm}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    
+                    />
+            <Grid
+                    Grid.Row="1"
+                    Grid.Column="4"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    Margin="0,20,0,50"
+                >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="12*" />
+                    <ColumnDefinition Width="*" />
+
+
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+
+                </Grid.RowDefinitions>
+
+                <WrapPanel
+                         Grid.RowSpan="4"
+                         Grid.ColumnSpan="1"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Top"
+                         Orientation="Vertical"
+                         Background="{x:Null}"
+                    >
+
+                    <TextBlock
+                        Style="{DynamicResource SettingsTxtBlck}"
+                        Text="{DynamicResource h_Exp3}" 
+                        FontSize="16" 
+                         HorizontalAlignment="Center"
+                        />
+                    <WrapPanel
+                                 Width="Auto"
+                                 HorizontalAlignment="Center"
+                                 Orientation="Horizontal">
+                        <Button
+                               x:Name="RusLocal"
+                                
+                               Content="{DynamicResource cbi_rus}"
+                               Style="{DynamicResource ButtonStyleTW}"
+                            Template="{DynamicResource ButtonTemplate}"
+                            />
+
+                        <Button
+                               x:Name="EnLocal"
+                                 
+                                Content="{DynamicResource cbi_en}"
+                                Style="{DynamicResource ButtonStyleTW}"
+                            Template="{DynamicResource ButtonTemplate}"
+                            />
+                    </WrapPanel>
+
+
+                    <!--///////////////////////////////////////////////////////////-->
+
+                    <TextBlock
+                        Style="{DynamicResource SettingsTxtBlck}"
+                        Text="{DynamicResource h_Theme}" 
+                        FontSize="16" 
+                         Margin="0,10,0, 7"
+                         HorizontalAlignment="Center"
+                        />
+                    <WrapPanel
+                                 Width="Auto"
+                                 HorizontalAlignment="Center"
+                                 Orientation="Horizontal">
+                        <Button
+                               x:Name="Green"
+                                Click="Green_Selected"
+                                Content="{DynamicResource theme_Green}"
+                             Style="{DynamicResource ButtonStyle}"
+                            />
+
+                        <Button
+                               x:Name="DarkTheme"
+                               Click="Dark_Selected"
+                               Content="{DynamicResource theme_Dark}" 
+                             Style="{DynamicResource ButtonStyle}"
+                            />
+
+
+                    </WrapPanel>
+
+                    <CheckBox
+                       x:Name="checkBoxDis"
+                        Cursor="Hand"
+                       Margin="10,5,0,0"
+                       VerticalContentAlignment="Center"
+                       Content="{DynamicResource checkBoxDis}" 
+                        Style="{DynamicResource checkBoxDisTxt}"
+                        
+                        />
+
+
+                </WrapPanel>
+
+            </Grid>
+            <DataGrid
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Background="#FF43CBA9" 
+                Name="Books"
+                AutoGenerateColumns="False"
+                IsReadOnly="True"
+                HorizontalScrollBarVisibility="Visible"
+                >
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Название книги" 
+                                        Binding="{Binding BOOK_NAME}"
+                                        
+                                        />
+                    <DataGridTextColumn Header="Автор"
+                                        Binding="{Binding AuthorsString}"
+                                        
+                                        />
+                    <DataGridTextColumn Header="Жанр"
+                                        Binding="{Binding GenresString}"
+                                        
+                                        />
+                    <DataGridTextColumn Header="Тип переплета"
+                                        Binding="{Binding BOOKBINSINGTYPE}"
+                                        
+                                        />
+                    <DataGridTextColumn Header="Год выпуска"
+                                        Binding="{Binding YEAR_OF_PUBLICATION}"
+                                        
+                                        />
+                    <DataGridTextColumn Header="Язык"
+                                        Binding="{Binding LANGUAGE}"
+                                        
+                                        />
+                    <DataGridTextColumn Header="Страницы"
+                                        Binding="{Binding PAGE_NUMBER}"
+                                        
+                                        />
+                    <DataGridTextColumn Header="Издатель"
+                                        Binding="{Binding PublisherHouseString}"
+                                        
+                                        />
+                    <DataGridTextColumn Header="ISBN"
+                                        Binding="{Binding ISBN}"
+                                        
+                                        />
+                    <DataGridTextColumn Header="Количество книг"
+                                        Binding="{Binding NUMBERSOFBOOKS}"
+                                        
+                                        />
+                    <DataGridTextColumn Header="Цена"
+                                        Binding="{Binding BOOKPRICE}"
+                                        
+                                        />
+                    <DataGridTextColumn Header="Изображение"
+                                        Binding="{Binding BOOK_IMAGESOURCE}"
+                                        
+                                        />
+                    <DataGridTextColumn Header="Описание"
+                                        Binding="{Binding DESCRIPTION}"
+                                        
+                                        />
+                </DataGrid.Columns>
+            </DataGrid>
+            
+        </Grid>
+    </Border>
+</Window>
+
+

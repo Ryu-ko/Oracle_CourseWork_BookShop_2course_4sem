@@ -1,0 +1,65 @@
+﻿<Window x:Class="CourseProj.UsersInf"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CourseProj"
+        mc:Ignorable="d"
+        Title="UsersInf"
+        Height="450"
+        Width="800">
+    
+    <Grid>
+        <DataGrid
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Background="#FFC043CB" 
+                Name="UserData"
+                AutoGenerateColumns="False"
+                IsReadOnly="True"
+                HorizontalScrollBarVisibility="Visible"
+                >
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID_Account" 
+                                        Binding="{Binding ID_Account }"
+                                        
+                                        />
+                <DataGridTextColumn Header="ID_UserAc"
+                                        Binding="{Binding ID_UserAc}"
+                                        
+                                        />
+                <DataGridTextColumn Header="ФИО"
+                                        Binding="{Binding User_Name}"
+                                        
+                                        />
+                <DataGridTextColumn Header="Login"
+                                        Binding="{Binding Login}"
+                                        
+                                        />
+                <DataGridTextColumn Header="Password "
+                                        Binding="{Binding Password}"
+                                        
+                                        />
+                <DataGridTextColumn Header="Email"
+                                        Binding="{Binding User_Email}"
+                                        
+                                        />
+                <DataGridTextColumn Header="Ноиер"
+                                        Binding="{Binding User_Numer}"
+                                        
+                                        />
+                <DataGridTextColumn Header="Пол"
+                                        Binding="{Binding User_Sex}"
+                                        
+                                        />
+                <DataGridTextColumn Header="День рождений"
+                                        Binding="{Binding User_BirthYear}"
+                                        
+                                        />
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</Window>

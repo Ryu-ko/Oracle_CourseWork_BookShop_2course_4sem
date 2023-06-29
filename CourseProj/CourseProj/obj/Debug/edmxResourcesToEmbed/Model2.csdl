@@ -1,0 +1,229 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AUTHOR">
+    <Key>
+      <PropertyRef Name="ID_AUTHOR" />
+    </Key>
+    <Property Name="ID_AUTHOR" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="FULLNAME" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="BIRTHYEAR" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="BIRTHCOUNTRY" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BOOK">
+    <Key>
+      <PropertyRef Name="ID_BOOK" />
+    </Key>
+    <Property Name="ID_BOOK" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="BOOK_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PAGE_NUMBER" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="ISBN" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="BOOKBINDINGTYPE" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="YEAR_OF_PUBLICATION" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="BOOK_ID_PUBLISHINGHOUSE" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="BOOK_LANGUAGE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="BOOK_DESCRIPTION" Type="String" MaxLength="3000" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="BOOK_IMAGESOURCE" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NUMBERSOFBOOKS" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="BOOK_PRISE" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <NavigationProperty Name="PUBLISHERHOUSE" Relationship="Self.SYS_C008948" FromRole="BOOK" ToRole="PUBLISHERHOUSE" />
+    <NavigationProperty Name="ORDERS" Relationship="Self.SYS_C008955" FromRole="BOOK" ToRole="ORDERS" />
+  </EntityType>
+  <EntityType Name="GENRE">
+    <Key>
+      <PropertyRef Name="GENRECODE" />
+    </Key>
+    <Property Name="GENRECODE" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="NAMEGENRE" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ORDERINF">
+    <Key>
+      <PropertyRef Name="ID_ORDER" />
+    </Key>
+    <Property Name="ID_ORDER" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="ID_USER" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="ORDER_DATE" Type="DateTime" Nullable="false" />
+    <Property Name="DELIVERY_TIME" Type="DateTime" Nullable="false" />
+    <Property Name="AMOUNT" Type="Decimal" Precision="4" Scale="2" Nullable="false" />
+    <NavigationProperty Name="USERINF" Relationship="Self.SYS_C008937" FromRole="ORDERINF" ToRole="USERINF" />
+    <NavigationProperty Name="ORDERS" Relationship="Self.SYS_C008954" FromRole="ORDERINF" ToRole="ORDERS" />
+  </EntityType>
+  <EntityType Name="PUBLISHERHOUSE">
+    <Key>
+      <PropertyRef Name="ID_PUBLISHINGHOUSE" />
+    </Key>
+    <Property Name="ID_PUBLISHINGHOUSE" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="PUBLISHINGHOUSE_NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="BOOK" Relationship="Self.SYS_C008948" FromRole="PUBLISHERHOUSE" ToRole="BOOK" />
+  </EntityType>
+  <EntityType Name="USERACCOUNT">
+    <Key>
+      <PropertyRef Name="ID_ACCOUNT" />
+    </Key>
+    <Property Name="ID_ACCOUNT" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="ID_USERAC" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="LOGIN" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="PASSWORD" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="USERINF" Relationship="Self.SYS_C008658" FromRole="USERACCOUNT" ToRole="USERINF" />
+  </EntityType>
+  <EntityType Name="USERINF">
+    <Key>
+      <PropertyRef Name="ID_USER" />
+    </Key>
+    <Property Name="ID_USER" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="USER_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="USER_EMAIL" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="USER_NUMER" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="USER_SEX" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="USER_BIRTHYEAR" Type="DateTime" Nullable="false" />
+    <NavigationProperty Name="ORDERINF" Relationship="Self.SYS_C008937" FromRole="USERINF" ToRole="ORDERINF" />
+    <NavigationProperty Name="USERACCOUNT" Relationship="Self.SYS_C008658" FromRole="USERINF" ToRole="USERACCOUNT" />
+  </EntityType>
+  <EntityType Name="ORDERS">
+    <Key>
+      <PropertyRef Name="NUMBERORDEREDBOOKS" />
+    </Key>
+    <Property Name="ID_ORDERS" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="ID_BOOK" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="NUMBERORDEREDBOOKS" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <NavigationProperty Name="BOOK" Relationship="Self.SYS_C008955" FromRole="ORDERS" ToRole="BOOK" />
+    <NavigationProperty Name="ORDERINF" Relationship="Self.SYS_C008954" FromRole="ORDERS" ToRole="ORDERINF" />
+  </EntityType>
+  <Association Name="SYS_C008948">
+    <End Role="PUBLISHERHOUSE" Type="Self.PUBLISHERHOUSE" Multiplicity="0..1" />
+    <End Role="BOOK" Type="Self.BOOK" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PUBLISHERHOUSE">
+        <PropertyRef Name="ID_PUBLISHINGHOUSE" />
+      </Principal>
+      <Dependent Role="BOOK">
+        <PropertyRef Name="BOOK_ID_PUBLISHINGHOUSE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SYS_C008955">
+    <End Role="BOOK" Type="Self.BOOK" Multiplicity="0..1" />
+    <End Role="ORDERS" Type="Self.ORDERS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BOOK">
+        <PropertyRef Name="ID_BOOK" />
+      </Principal>
+      <Dependent Role="ORDERS">
+        <PropertyRef Name="ID_BOOK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SYS_C008937">
+    <End Role="USERINF" Type="Self.USERINF" Multiplicity="0..1" />
+    <End Role="ORDERINF" Type="Self.ORDERINF" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERINF">
+        <PropertyRef Name="ID_USER" />
+      </Principal>
+      <Dependent Role="ORDERINF">
+        <PropertyRef Name="ID_USER" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SYS_C008954">
+    <End Role="ORDERINF" Type="Self.ORDERINF" Multiplicity="0..1" />
+    <End Role="ORDERS" Type="Self.ORDERS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ORDERINF">
+        <PropertyRef Name="ID_ORDER" />
+      </Principal>
+      <Dependent Role="ORDERS">
+        <PropertyRef Name="ID_ORDERS" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SYS_C008658">
+    <End Role="USERINF" Type="Self.USERINF" Multiplicity="0..1" />
+    <End Role="USERACCOUNT" Type="Self.USERACCOUNT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERINF">
+        <PropertyRef Name="ID_USER" />
+      </Principal>
+      <Dependent Role="USERACCOUNT">
+        <PropertyRef Name="ID_USERAC" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AUTHOR" EntityType="Self.AUTHOR" />
+    <EntitySet Name="BOOK" EntityType="Self.BOOK" />
+    <EntitySet Name="GENRE" EntityType="Self.GENRE" />
+    <EntitySet Name="ORDERINF" EntityType="Self.ORDERINF" />
+    <EntitySet Name="PUBLISHERHOUSE" EntityType="Self.PUBLISHERHOUSE" />
+    <EntitySet Name="USERACCOUNT" EntityType="Self.USERACCOUNT" />
+    <EntitySet Name="USERINF" EntityType="Self.USERINF" />
+    <EntitySet Name="ORDERS" EntityType="Self.ORDERS" />
+    <AssociationSet Name="SYS_C008948" Association="Self.SYS_C008948">
+      <End Role="PUBLISHERHOUSE" EntitySet="PUBLISHERHOUSE" />
+      <End Role="BOOK" EntitySet="BOOK" />
+    </AssociationSet>
+    <AssociationSet Name="SYS_C008955" Association="Self.SYS_C008955">
+      <End Role="BOOK" EntitySet="BOOK" />
+      <End Role="ORDERS" EntitySet="ORDERS" />
+    </AssociationSet>
+    <AssociationSet Name="SYS_C008937" Association="Self.SYS_C008937">
+      <End Role="USERINF" EntitySet="USERINF" />
+      <End Role="ORDERINF" EntitySet="ORDERINF" />
+    </AssociationSet>
+    <AssociationSet Name="SYS_C008954" Association="Self.SYS_C008954">
+      <End Role="ORDERINF" EntitySet="ORDERINF" />
+      <End Role="ORDERS" EntitySet="ORDERS" />
+    </AssociationSet>
+    <AssociationSet Name="SYS_C008658" Association="Self.SYS_C008658">
+      <End Role="USERINF" EntitySet="USERINF" />
+      <End Role="USERACCOUNT" EntitySet="USERACCOUNT" />
+    </AssociationSet>
+    <FunctionImport Name="ADDNEWBOOK">
+      <Parameter Name="ADDBOOKNAME" Mode="In" Type="String" />
+      <Parameter Name="ADDBOOKPAGES" Mode="In" Type="Decimal" />
+      <Parameter Name="ADDBOOKISBN" Mode="In" Type="String" />
+      <Parameter Name="ADDBOOKBINDING" Mode="In" Type="String" />
+      <Parameter Name="ADDBOOKYEARPUBLIC" Mode="In" Type="Decimal" />
+      <Parameter Name="ADDBOOKIDPUBLISHHOUS" Mode="In" Type="Decimal" />
+      <Parameter Name="ADDBOOKLANGUAGE" Mode="In" Type="String" />
+      <Parameter Name="ADDBOOKDESCRIPT" Mode="In" Type="String" />
+      <Parameter Name="ADDBOOKIMAGESOURSCE" Mode="In" Type="String" />
+      <Parameter Name="ADDBOOKNUMBERSOFBOOKS" Mode="In" Type="Decimal" />
+      <Parameter Name="ADDBOOKPRICE" Mode="In" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="BOOKALLINF" />
+    <FunctionImport Name="BOOKINF" ReturnType="Collection(Model.BOOKINF_Result)" />
+    <FunctionImport Name="ENTERUSER">
+      <Parameter Name="ENTEREDLOGIN" Mode="In" Type="String" />
+      <Parameter Name="ENTEREDPASSWORD" Mode="In" Type="String" />
+      <Parameter Name="ENTERENDFIO" Mode="In" Type="String" />
+      <Parameter Name="ENTEREDEMAIL" Mode="In" Type="String" />
+      <Parameter Name="ENTEREDNUMBER" Mode="In" Type="String" />
+      <Parameter Name="ENTEREDSEX" Mode="In" Type="String" />
+      <Parameter Name="ENTEREDBIRTHDAY" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="GETALLAUTHORSINF">
+      <Parameter Name="FUNC_BOOK_ID" Mode="In" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="GETALLGENRESINF">
+      <Parameter Name="FUNC_BOOK_ID" Mode="In" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="GETUSERSINF" />
+    <FunctionImport Name="TESTENTER">
+      <Parameter Name="ENTEREDLOGINN" Mode="In" Type="String" />
+      <Parameter Name="ENTEREDPASSWORDD" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="BOOKINF_Result">
+    <Property Type="Decimal" Name="ID_BOOK" Nullable="false" />
+    <Property Type="String" Name="BOOK_NAME" Nullable="false" />
+    <Property Type="Decimal" Name="PAGE_NUMBER" Nullable="false" />
+    <Property Type="String" Name="ISBN" Nullable="false" />
+    <Property Type="String" Name="BOOKBINDINGTYPE" Nullable="false" />
+    <Property Type="Decimal" Name="YEAR_OF_PUBLICATION" Nullable="false" />
+    <Property Type="String" Name="PUBLISHINGHOUSE_NAME" Nullable="false" />
+    <Property Type="String" Name="BOOK_LANGUAGE" Nullable="false" />
+    <Property Type="String" Name="BOOK_IMAGESOURCE" Nullable="false" />
+    <Property Type="Decimal" Name="BOOK_PRISE" Nullable="false" />
+    <Property Type="String" Name="BOOK_DESCRIPTION" Nullable="false" />
+  </ComplexType>
+</Schema>

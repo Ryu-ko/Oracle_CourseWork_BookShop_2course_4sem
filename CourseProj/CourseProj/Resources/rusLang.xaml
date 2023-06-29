@@ -1,0 +1,63 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:v="clr-namespace:System;assembly=mscorlib">
+
+    <v:String x:Key="h_Tab1">Каталог</v:String>
+    <v:String x:Key="h_Tab2">База данных</v:String>
+    <v:String x:Key="h_Tab3">Настройки</v:String>
+    <v:String x:Key="h_Tab4">Добавить авто</v:String>
+    <v:String x:Key="h_Tab5">Фильтр</v:String>
+    <v:String x:Key="exittxt">Выход</v:String>
+
+
+    <v:String x:Key="h_Tab7">Стоимость($)</v:String>
+    <v:String x:Key="h_Tab8">Изображение</v:String>
+    <v:String x:Key="h_Tab9">Категория</v:String>
+
+    <v:String x:Key="b_BookTitle">Книга</v:String>
+    <v:String x:Key="b_BookName">Название книги</v:String>
+    <v:String x:Key="b_Photobook">Фото</v:String>
+
+    <v:String x:Key="b_Binding_type">Тип переплета</v:String>
+    <v:String x:Key="b_Year">Год выпуска</v:String>
+    <v:String x:Key="b_Cost">Цена  (Byn)</v:String>
+    <v:String x:Key="b_Pages">Количество страниц</v:String>
+    <v:String x:Key="b_Autor">Автор</v:String>
+    <v:String x:Key="b_ImagePath">Путь к картинке</v:String>
+    <v:String x:Key="b_Rating">Рейтинг</v:String>
+
+    <v:String x:Key="binding_1">Твердый переплет</v:String>
+    <v:String x:Key="binding_2">Мягкая обложка</v:String>
+    <v:String x:Key="binding_3">Твердый переплет с доп обложкой</v:String>
+    <v:String x:Key="add_book">Добавить книгу</v:String>
+    <v:String x:Key="btn_chooseFile">Выберите файл</v:String>
+
+    <v:String x:Key="h_Exp1">Выбор курсора</v:String>
+    <v:String x:Key="h_Exp2">Выбор темы</v:String>
+    <v:String x:Key="h_Exp3">Выбор языка</v:String>
+
+    <v:String x:Key="but_geomCur">Хэллоу Китти</v:String>
+    <v:String x:Key="but_PixCur">Гутетама</v:String>
+    <v:String x:Key="btnPony">Пони</v:String>
+
+    <v:String x:Key="cbi_en">Английский</v:String>
+    <v:String x:Key="cbi_rus">Русский</v:String>
+    <v:String x:Key="btn_submit">Отправить</v:String>
+
+    <v:String x:Key="sorting_cat1">По цене</v:String>
+    <v:String x:Key="sorting_cat4">По количеству страниц</v:String>
+    <v:String x:Key="sorting_cat1_from">от</v:String>
+    <v:String x:Key="sorting_cat1_to">до</v:String>
+    <v:String x:Key="sorting_cat2">По переплету</v:String>
+    <v:String x:Key="sorting_cat3">По рейтингу</v:String>
+    <v:String x:Key="sorting_filterBtn">Отфильтровать</v:String>
+    <v:String x:Key="sorting_resetFilterBtn">Сбросить Фильтрацию</v:String>
+
+    <v:String x:Key="h_Theme">Темы</v:String>
+    <v:String x:Key="theme_Dark">Темная зеленая</v:String>
+    <v:String x:Key="theme_Green">Светлая зелёная</v:String>
+
+    <v:String x:Key="checkBoxDis">Включить темы</v:String>
+
+</ResourceDictionary>

@@ -1,0 +1,109 @@
+GRANT CREATE ANY DIRECTORY TO ADMINCORE WITH ADMIN OPTION;
+GRANT EXECUTE ON dbms_crypto TO ADMINCORE WITH GRANT OPTION;
+GRANT EXECUTE ON dbms_xmldom TO ADMINCORE WITH GRANT OPTION;
+GRANT EXECUTE ON dbms_xslprocessor TO ADMINCORE WITH GRANT OPTION;
+GRANT EXECUTE ON dbms_xmlparser TO ADMINCORE WITH GRANT OPTION;
+GRANT EXECUTE ON dbms_xmldom TO ADMINCORE WITH GRANT OPTION;
+GRANT EXECUTE ON dbms_lob TO ADMINCORE WITH GRANT OPTION;
+
+
+
+SELECT file_name FROM dba_data_files; 
+
+CREATE OR REPLACE DIRECTORY EXPORT_DATA AS 
+'C:\xml';
+
+
+GRANT READ, WRITE ON DIRECTORY EXPORT_DATA TO ADMINCORE;
+GRANT READ, WRITE ON DIRECTORY IMPORT_DATA TO ADMINCORE;
+
+
+CREATE OR REPLACE DIRECTORY IMPORT_DATA AS 
+'C:\xml';
+
+drop procedure EXPORT_Authors_TO_XML;
+
+CREATE OR REPLACE PROCEDURE EXPORT_Authors_TO_XML
+IS
+     doc DBMS_XMLDOM.DOMDocument;
+     xdata XMLTYPE;
+     CURSOR xmlcur IS
+         SELECT XMLELEMENT(
+         "Authors",
+         XMLAttributes('http://www.w3.org/2001/XMLSchema' AS 
+        "xmlns:xsi",
+         'http://www.oracle.com/Users.xsd' AS 
+        "xsi:nonamespaceSchemaLocation"),
+         XMLAGG(XMLELEMENT("Author",
+         xmlelement("ID_Author", ADMINCORE.Author.ID_Author),
+         xmlelement("FullName", ADMINCORE.Author.FullName),
+         xmlelement("BirthYear", ADMINCORE.Author.BirthYear),
+         xmlelement("BirthCountry", ADMINCORE.Author.BirthCountry)
+         ))) from ADMINCORE.Author;
+    BEGIN
+        open xmlcur;
+    LOOP
+         FETCH xmlcur INTO xdata;
+         EXIT WHEN xmlcur%notfound;
+     END LOOP;
+     CLOSE xmlcur;
+     doc := DBMS_XMLDOM.NewDOMDocument(xdata);
+     DBMS_XMLDOM.WRITETOFILE(doc, 'EXPORT_DATA/Authors.xml');
+END;
+
+exec EXPORT_Authors_TO_XML;
+
+begin
+    IMPORT_Authors_FROM_XML();
+end;
+-----------------------IMPORT-------------------------------
+
+CREATE OR REPLACE PROCEDURE IMPORT_Authors_FROM_XML
+IS
+    L_CLOB CLOB;
+    L_BFILE BFILE := BFILENAME('IMPORT_DATA', 'Authors.xml');
+    L_DEST_OFFSET INTEGER := 1;
+    L_SRC_OFFSET INTEGER := 1;
+    L_BFILE_CSID NUMBER := 0;
+    L_LANG_CONTEXT INTEGER := 0;
+    L_WARNING INTEGER := 0;
+    P DBMS_XMLPARSER.PARSER;
+    V_DOC DBMS_XMLDOM.DOMDOCUMENT;
+    V_ROOT_ELEMENT DBMS_XMLDOM.DOMELEMENT;
+    V_CHILD_NODES DBMS_XMLDOM.DOMNODELIST;
+    V_CURRENT_NODE DBMS_XMLDOM.DOMNODE;
+    cl ADMINCORE.Author%ROWTYPE;
+BEGIN
+        DBMS_LOB.CREATETEMPORARY (L_CLOB, TRUE);
+        DBMS_LOB.FILEOPEN(L_BFILE, DBMS_LOB.FILE_READONLY);
+        DBMS_LOB.LOADCLOBFROMFILE(DEST_LOB => L_CLOB, SRC_BFILE => L_BFILE, AMOUNT => DBMS_LOB.LOBMAXSIZE, DEST_OFFSET => L_DEST_OFFSET, SRC_OFFSET => L_SRC_OFFSET, BFILE_CSID => L_BFILE_CSID, LANG_CONTEXT => L_LANG_CONTEXT, WARNING => L_WARNING);
+        DBMS_LOB.FILECLOSE(L_BFILE);
+        COMMIT;
+    P := DBMS_XMLPARSER.NEWPARSER;
+    DBMS_XMLPARSER.PARSECLOB(P, L_CLOB);
+    V_DOC := DBMS_XMLPARSER.GETDOCUMENT(P);
+    V_ROOT_ELEMENT := DBMS_XMLDOM.Getdocumentelement(V_DOC);
+    V_CHILD_NODES := DBMS_XMLDOM.GETCHILDRENBYTAGNAME(V_ROOT_ELEMENT, '*');
+        FOR i IN 0 .. DBMS_XMLDOM.GETLENGTH(V_CHILD_NODES) - 1 LOOP
+            V_CURRENT_NODE := DBMS_XMLDOM.ITEM(V_CHILD_NODES, i);
+            DBMS_XSLPROCESSOR.VALUEOF(V_CURRENT_NODE, 'ID_Author/text()', cl.ID_Author);
+            DBMS_XSLPROCESSOR.VALUEOF(V_CURRENT_NODE, 'FullName/text()', cl.FullName);
+            DBMS_XSLPROCESSOR.VALUEOF(V_CURRENT_NODE, 'BirthYear/text()', cl.BirthYear);
+            DBMS_XSLPROCESSOR.VALUEOF(V_CURRENT_NODE, 'BirthCountry/text()', cl.BirthCountry);
+            INSERT INTO ADMINCORE.Author (ID_Author, FullName, BirthYear, BirthCountry) VALUES (cl.ID_Author, cl.FullName, cl.BirthYear, cl.BirthCountry);
+        END LOOP;
+    DBMS_LOB.FREETEMPORARY(L_CLOB);
+    DBMS_XMLPARSER.FREEPARSER(P);
+    DBMS_XMLDOM.FREEDOCUMENT(V_DOC);
+    COMMIT;
+END;
+
+
+select * from client
+
+EXPLAIN PLAN FOR
+    SELECT * FROM ADMINCORE.Author a join ADMINCORE.Authors aus
+    on a.ID_Author = aus.ID_Author;
+SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
+
+create index index123 on ADMINCORE.Authors(ID_Author);
